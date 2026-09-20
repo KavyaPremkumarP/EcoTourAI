@@ -3,260 +3,848 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-          content="EcoTour AI - Smart plastic monitoring for cleaner tourist destinations">
+    <meta name="description" content="Ooty Eco-Tourism AI E-Pass - AI-powered plastic detection & vehicle entry monitoring for Nilgiris district checkpoints">
+    <title>Ooty Eco-Pass AI | Nilgiris Plastic Elimination & Entry Portal</title>
 
-    <title>EcoTour AI | Smart Eco-Tourism</title>
-
-    <!-- Tailwind CSS + Typography -->
+    <!-- Tailwind CSS + Typography Plugin -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+
+    <!-- Custom CSS & Advanced Animations -->
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        /* FADE & SLIDE ANIMATIONS */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .fade-up { animation: fadeUp 1s ease-out forwards; }
+
+        /* FLOATING EMOJIS & CARDS */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(3deg); }
+        }
+        .float-animation { animation: float 4s ease-in-out infinite; }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-18px) rotate(-4deg); }
+        }
+        .float-slow { animation: floatSlow 6s ease-in-out infinite; }
+
+        /* Floating plastic items */
+        @keyframes floatPlastic1 {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateY(-20px) rotate(12deg) scale(1.05); }
+        }
+        @keyframes floatPlastic2 {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateY(-25px) rotate(-15deg) scale(0.95); }
+        }
+
+        .plastic-float-1 { animation: floatPlastic1 5s ease-in-out infinite; }
+        .plastic-float-2 { animation: floatPlastic2 6.5s ease-in-out infinite 1s; }
+
+        /* LASER SCAN BEAM */
+        @keyframes laserBeam {
+            0% { top: 0%; opacity: 0.8; }
+            50% { top: 100%; opacity: 1; }
+            100% { top: 0%; opacity: 0.8; }
+        }
+        .laser-scan {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #4ade80, #22c55e, #4ade80, transparent);
+            box-shadow: 0 0 15px #4ade80, 0 0 30px #22c55e;
+            animation: laserBeam 2.5s ease-in-out infinite;
+            z-index: 20;
+        }
+
+        /* RADAR SWEEP */
+        @keyframes radarSweep {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .radar-sweep {
+            background: conic-gradient(from 0deg, rgba(74, 222, 128, 0.4) 0deg, transparent 60deg, transparent 360deg);
+            animation: radarSweep 4s linear infinite;
+        }
+
+        /* GLOW ANIMATIONS */
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(74, 222, 128, 0.2); }
+            50% { shadow: 0 0 45px rgba(74, 222, 128, 0.5); }
+        }
+        .glow-animation { animation: glow 3s ease-in-out infinite; }
+
+        /* RED ALERT PULSE */
+        @keyframes alertPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            50% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+        }
+        .alert-pulse-btn { animation: alertPulse 2s infinite; }
+
+        /* LIVE PULSE */
+        @keyframes livePulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.08); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .live-animation { animation: livePulse 2s infinite; }
+
+        /* SCROLL REVEAL */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 
-<body class="bg-green-950 text-white">
+<body class="bg-slate-950 text-slate-100 selection:bg-emerald-400 selection:text-slate-950">
 
-    <!-- Header -->
-    <header class="bg-green-950">
-        <nav class="max-w-6xl mx-auto px-6 py-5
-                    flex justify-between items-center">
+    <!-- =========================================
+         ANNOUNCEMENT BAR (OOTY E-PASS MANDATE)
+    ========================================== -->
+    <div class="bg-gradient-to-r from-emerald-950 via-teal-900 to-emerald-950 text-emerald-100 px-4 py-2 text-xs md:text-sm font-medium flex flex-wrap justify-between items-center shadow border-b border-emerald-700/30">
+        <span class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <strong>OOTY NILGIRIS E-PASS 2026:</strong> Mandatory Vehicle E-Pass + AI Plastic Detection Active at Kallar, Kunjapanai, Masinagudi, Mel Gudalur & Geddai Checkposts.
+        </span>
+        <button onclick="triggerTouristAlert('Single-Use Water Bottle Detected')" class="bg-rose-500/80 hover:bg-rose-500 text-white px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1 shadow alert-pulse-btn border border-rose-400/40">
+            <span>🚨</span> Plastic Warning Alert
+        </button>
+    </div>
 
-            <h1 class="text-2xl font-bold">
-                🌿 EcoTour AI
-            </h1>
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+    <header class="bg-slate-950/80 backdrop-blur-lg sticky top-0 z-50 border-b border-emerald-800/40">
+        <nav class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <!-- Logo -->
+            <a href="#home" class="text-2xl font-bold hover:text-emerald-300 transition flex items-center gap-2 text-white">
+                <span>🌿</span> Ooty EcoPass <span class="text-emerald-400">AI</span>
+            </a>
 
-            <div class="flex gap-6 font-semibold">
-                <a href="#home" class="hover:text-green-300">Home</a>
-                <a href="#problem" class="hover:text-green-300">Problem</a>
-                <a href="#solution" class="hover:text-green-300">Solution</a>
-                <a href="#features" class="hover:text-green-300">Features</a>
+            <!-- Navigation -->
+            <div class="flex flex-wrap justify-center gap-5 md:gap-7 font-semibold text-sm">
+                <a href="#home" class="hover:text-emerald-300 transition text-slate-300">Home</a>
+                <a href="#gallery" class="hover:text-emerald-300 transition text-emerald-300 font-bold">Mountains & Wildlife 🏔️</a>
+                <a href="#rules-table" class="hover:text-emerald-300 transition text-slate-300">E-Pass Rules & AI Table</a>
+                <a href="#epass-form" class="hover:text-emerald-300 transition text-slate-300">Apply E-Pass</a>
+                <a href="#scanner" class="hover:text-emerald-300 transition text-slate-300">Checkpost Camera AI</a>
+                <a href="#checkposts" class="hover:text-emerald-300 transition text-slate-300">5 Checkposts</a>
             </div>
-
         </nav>
     </header>
 
-
-    <!-- Main -->
+    <!-- =========================================
+         MAIN
+    ========================================== -->
     <main>
 
-        <!-- Hero Section -->
-        <section id="home"
-            class="bg-cover bg-center"
-            style="background-image:
-            url('https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=1600&q=80');">
+        <!-- =====================================
+             HERO SECTION (OOTY MOUNTAIN SANCTUARY)
+        ====================================== -->
+        <section id="home" class="relative min-h-[92vh] bg-cover bg-center overflow-hidden" style="background-image: url('https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1920&q=80');">
+            <!-- Soft Gradient Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-emerald-950/80 to-slate-950"></div>
 
-            <div class="bg-green-950/85">
+            <!-- Soft Ambient Background Glows -->
+            <div class="absolute top-20 right-10 w-56 h-56 rounded-full bg-emerald-500/15 blur-3xl pointer-events-none float-slow"></div>
+            <div class="absolute bottom-10 left-10 w-64 h-64 rounded-full bg-teal-500/10 blur-3xl pointer-events-none float-animation"></div>
 
-                <div class="max-w-6xl mx-auto px-6 py-24
-                            grid md:grid-cols-2 gap-12 items-center">
-
-                    <!-- Hero Content -->
+            <!-- Floating AI Plastic Flags -->
+            <div class="absolute top-28 left-[10%] plastic-float-1 pointer-events-none opacity-60 hover:opacity-100 transition z-20">
+                <div class="bg-rose-950/40 backdrop-blur-md border border-rose-400/30 p-3 rounded-2xl flex items-center gap-3 shadow-lg">
+                    <span class="text-2xl">🍾</span>
                     <div>
+                        <p class="text-[10px] text-rose-300 font-bold uppercase">CHECKPOST AI FLAG</p>
+                        <p class="text-xs font-semibold text-slate-100">PET Plastic Bottle (Kallar)</p>
+                    </div>
+                </div>
+            </div>
 
-                        <p class="text-green-300 font-semibold uppercase">
-                            AI for Sustainable Tourism
-                        </p>
+            <div class="absolute bottom-36 left-[3%] plastic-float-2 pointer-events-none opacity-60 hover:opacity-100 transition z-20 hidden lg:block">
+                <div class="bg-rose-950/40 backdrop-blur-md border border-rose-400/30 p-3 rounded-2xl flex items-center gap-3 shadow-lg">
+                    <span class="text-2xl">🥄</span>
+                    <div>
+                        <p class="text-[10px] text-rose-300 font-bold uppercase">CHECKPOST AI FLAG</p>
+                        <p class="text-xs font-semibold text-slate-100">Plastic Spoon (Masinagudi)</p>
+                    </div>
+                </div>
+            </div>
 
-                        <h2 class="text-5xl md:text-6xl font-bold mt-4">
-                            Smarter Entry.
-                            <span class="text-green-300">
-                                Cleaner Destinations.
-                            </span>
-                        </h2>
+            <!-- Hero Content -->
+            <div class="relative max-w-7xl mx-auto px-6 py-14 md:py-20 grid lg:grid-cols-2 gap-10 items-center z-10">
 
-                        <p class="mt-6 text-lg text-green-100">
-                            EcoTour AI helps tourist destinations detect
-                            prohibited plastic, record violations and
-                            identify high-risk areas using AI.
-                        </p>
-
-                        <div class="mt-8 flex gap-4">
-
-                            <a href="#solution"
-                               class="bg-green-400 text-green-950
-                                      px-6 py-3 rounded-lg font-bold
-                                      hover:bg-green-300">
-                                Get Started
-                            </a>
-
-                            <a href="#features"
-                               class="border border-green-300
-                                      px-6 py-3 rounded-lg font-bold
-                                      hover:bg-green-800">
-                                Explore Features
-                            </a>
-
-                        </div>
-
+                <!-- Left Content -->
+                <div class="space-y-6 fade-up">
+                    <div class="inline-flex items-center gap-2 bg-emerald-500/15 border border-emerald-400/40 text-emerald-300 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">
+                        <span>🌲</span> Official Nilgiris Eco Portal 2026
                     </div>
 
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight">
+                        Ooty E-Pass & <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-green-400">AI Plastic Screening</span>
+                    </h1>
 
-                    <!-- Product Dashboard -->
-                    <article class="bg-white/10 backdrop-blur
-                                    border border-green-400/40
-                                    rounded-3xl p-8 shadow-2xl">
+                    <p class="text-slate-300 text-base md:text-lg leading-relaxed max-w-xl">
+                        Protecting the Nilgiris Biosphere & Wildlife. All visiting tourist vehicles must obtain a digital E-Pass and pass AI single-use plastic camera detection at entry checkposts.
+                    </p>
 
-                        <div class="flex justify-between items-center">
-                            <h3 class="text-xl font-bold">
-                                EcoTour AI Monitor
-                            </h3>
+                    <div class="pt-2 flex flex-wrap items-center gap-4">
+                        <a href="#epass-form" class="bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black px-7 py-4 rounded-2xl transition transform hover:-translate-y-1 shadow-xl flex items-center gap-2 text-base">
+                            <span>🎫</span> Apply Mandatory E-Pass
+                        </a>
+                        <a href="#scanner" class="bg-slate-900/80 hover:bg-slate-800 text-emerald-300 border border-emerald-500/40 font-bold px-6 py-4 rounded-2xl transition flex items-center gap-2 text-base backdrop-blur-md">
+                            <span>📸</span> Test AI Camera Scanner
+                        </a>
+                    </div>
+                </div>
 
-                            <span class="bg-green-400 text-green-950
-                                         px-3 py-1 rounded-full text-sm
-                                         font-bold">
-                                LIVE
+                <!-- Right Card: Live Checkpost Camera Simulator -->
+                <article id="scanner" class="bg-slate-900/70 backdrop-blur-xl border border-emerald-500/30 rounded-3xl p-6 shadow-2xl space-y-4 glow-animation border-t-2 border-t-emerald-400/60 reveal">
+                    <div class="flex justify-between items-center border-b border-emerald-800/40 pb-3">
+                        <div>
+                            <p class="text-emerald-300 text-xs font-extrabold tracking-wider uppercase">CHECKPOST: KALLAR GATE (TN-43 ACCESS)</p>
+                            <h2 class="text-lg sm:text-xl font-bold text-white mt-0.5">AI Checkpoint & Eco Product Acceptance</h2>
+                        </div>
+                        <span class="bg-emerald-400/20 border border-emerald-400/40 text-emerald-300 px-3 py-1 rounded-full text-xs font-bold live-animation flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> AI ACTIVE
+                        </span>
+                    </div>
+
+                    <!-- AI Radar Conveyor -->
+                    <div class="relative bg-slate-950/90 border border-emerald-800/50 rounded-2xl p-4 text-center overflow-hidden min-h-[210px] flex flex-col items-center justify-center">
+                        <div class="absolute inset-0 radar-sweep opacity-20 pointer-events-none"></div>
+                        <div class="laser-scan"></div>
+
+                        <div class="relative z-10 transition-all duration-500 transform scale-100" id="scanner-item-box">
+                            <div class="relative inline-block p-3 sm:p-4 border-2 border-dashed border-rose-400/80 bg-rose-500/10 rounded-2xl shadow-md" id="item-bounding-box">
+                                <span class="absolute -top-3 left-3 bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded shadow" id="item-tag-label">
+                                    🚨 FLAGGED: PLASTIC BOTTLE (98.6%)
+                                </span>
+                                <span class="text-5xl sm:text-6xl block my-2 float-animation" id="item-emoji">🍾</span>
+                            </div>
+
+                            <h3 class="text-lg font-bold text-white mt-2" id="item-title">Single-Use PET Bottle</h3>
+                            <p class="text-xs text-rose-300 font-semibold mt-1" id="item-status">❌ PROHIBITED ITEM DETECTED — REJECTED AT CHECKPOST</p>
+                        </div>
+
+                        <!-- Scan Select Buttons -->
+                        <div class="relative z-10 mt-4 flex flex-wrap justify-center gap-2">
+                            <button onclick="selectPlastic('bottle', '🍾', 'Single-Use Water Bottle', '98.6%')" class="bg-slate-900/90 hover:bg-rose-950 border border-rose-400/40 text-xs text-rose-200 px-3 py-1.5 rounded-lg transition font-bold">🍾 Bottle</button>
+                            <button onclick="selectPlastic('spoon', '🥄', 'Disposable Plastic Spoon', '97.4%')" class="bg-slate-900/90 hover:bg-rose-950 border border-rose-400/40 text-xs text-rose-200 px-3 py-1.5 rounded-lg transition font-bold">🥄 Spoon</button>
+                            <button onclick="selectPlastic('plate', '🍽️', 'Styrofoam Plastic Plate', '99.1%')" class="bg-slate-900/90 hover:bg-rose-950 border border-rose-400/40 text-xs text-rose-200 px-3 py-1.5 rounded-lg transition font-bold">🍽️ Plate</button>
+                            <button onclick="selectPlastic('cup', '🥤', 'Disposable Plastic Cup', '96.8%')" class="bg-slate-900/90 hover:bg-rose-950 border border-rose-400/40 text-xs text-rose-200 px-3 py-1.5 rounded-lg transition font-bold">🥤 Cup</button>
+                        </div>
+                    </div>
+
+                    <!-- TOURIST ECO PRODUCT ACCEPTANCE & SWAP PANEL (GREEN & WHITE COLOR COMBINATION WITH ₹200 & ₹500 OPTIONS) -->
+                    <div id="acceptance-card" class="mt-4 p-5 rounded-2xl border-2 border-emerald-400 bg-white text-emerald-950 shadow-2xl transition-all duration-500">
+                        <div id="acceptance-status-text">
+                            <span class="text-emerald-800 font-extrabold text-xs uppercase block flex items-center gap-1.5">
+                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping"></span> 🚨 PROHIBITED PLASTIC DETECTED — CHOOSE APPROVED ECO PRODUCT:
+                            </span>
+                            <p class="text-xs text-emerald-900 font-medium mt-1">Single-use plastic is banned in Nilgiris. Select an eco option below to receive entry clearance voucher:</p>
+                        </div>
+
+                        <!-- ACCEPTANCE ACTION BUTTONS IN GREEN & WHITE WITH ₹200 AND ₹500 PRICING OPTIONS -->
+                        <div class="mt-4 grid grid-cols-1 sm:grid-cols-4 gap-2.5 text-xs">
+                            <button onclick="acceptEcoProduct('free')" class="bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold p-3 rounded-xl transition shadow flex items-center justify-center gap-1.5 border border-emerald-600 hover:scale-105">
+                                <span>🔄</span> Eco Bottle Swap (Free)
+                            </button>
+                            <button onclick="acceptEcoProduct('cloth')" class="bg-emerald-100 hover:bg-emerald-200 text-emerald-950 font-extrabold p-3 rounded-xl transition shadow flex items-center justify-center gap-1.5 border border-emerald-400 hover:scale-105">
+                                <span>🛍️</span> Jute Bag (₹10)
+                            </button>
+                            <button onclick="acceptEcoProduct('metal')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold p-3 rounded-xl transition shadow flex items-center justify-center gap-1.5 border-2 border-emerald-500 hover:scale-105">
+                                <span>🍶</span> Eco Flask (₹200)
+                            </button>
+                            <button onclick="acceptEcoProduct('smart')" class="bg-white hover:bg-emerald-50 text-emerald-950 font-extrabold p-3 rounded-xl transition shadow flex items-center justify-center gap-1.5 border-2 border-emerald-600 hover:scale-105">
+                                <span>⭐</span> Smart QR Canteen (₹500)
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- =========================================
+             LUSH NILGIRIS ECO SANCTUARY, WILDLIFE & PLASTIC ELIMINATION GALLERY
+        ========================================== -->
+        <section id="gallery" class="bg-slate-950 py-20 relative overflow-hidden border-t border-b border-emerald-800/40">
+            <!-- Ambient Background Glow -->
+            <div class="absolute top-1/3 right-10 w-72 h-72 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none float-slow"></div>
+            <div class="absolute bottom-10 left-10 w-80 h-80 rounded-full bg-teal-500/10 blur-3xl pointer-events-none float-animation"></div>
+
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+
+                <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+                    <span class="bg-emerald-500/15 text-emerald-300 border border-emerald-400/30 px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-widest inline-block shadow-sm">
+                        🌿 PROTECTING NILGIRIS MOUNTAINS & WILDLIFE
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-white mt-3 tracking-tight">
+                        Lush Green Nilgiris & <span class="text-emerald-300">Zero-Plastic Mandate</span>
+                    </h2>
+                    <p class="text-slate-300 mt-3 text-sm md:text-base leading-relaxed">
+                        The Nilgiris tea estates and forest reserves are home to endangered Asian elephants, Nilgiri Tahr, and pristine ecosystems. Edge AI checkposts ensure tourist plastic never pollutes our hills.
+                    </p>
+                </div>
+
+                <!-- 4-CARD VISUAL GALLERY (MOUNTAINS, ANIMALS, PLASTIC AVOIDING) -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+
+                    <!-- Card 1: Lush Nilgiris Tea Hills -->
+                    <div class="bg-slate-900/80 border border-emerald-500/30 rounded-2xl overflow-hidden shadow-xl hover:-translate-y-2 hover:border-emerald-400 transition duration-300 group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80" alt="Ooty Nilgiris Tea Estate Hills" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <span class="absolute top-3 left-3 bg-emerald-500 text-slate-950 font-black text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
+                                🏔️ Tea Garden Hills
                             </span>
                         </div>
-
-                        <div class="text-center py-8">
-                            <div class="text-6xl">♻️</div>
-
-                            <p class="text-green-200 mt-4">
-                                Environmental Monitoring
+                        <div class="p-5">
+                            <h3 class="text-base font-bold text-white group-hover:text-emerald-300 transition">Pristine Ooty Landscape</h3>
+                            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+                                Rolling green tea plantations of Nilgiris preserved under strict zero-plastic environmental protection.
                             </p>
                         </div>
+                    </div>
 
-                        <div class="grid grid-cols-2 gap-4">
+                    <!-- Card 2: Wildlife & Elephant Protection -->
+                    <div class="bg-slate-900/80 border border-emerald-500/30 rounded-2xl overflow-hidden shadow-xl hover:-translate-y-2 hover:border-emerald-400 transition duration-300 group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=800&q=80" alt="Mudumalai Elephants & Wildlife Protection" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <span class="absolute top-3 left-3 bg-emerald-500 text-slate-950 font-black text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
+                                🐘 Wildlife Defense
+                            </span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-base font-bold text-white group-hover:text-emerald-300 transition">Mudumalai & Masinagudi Fauna</h3>
+                            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+                                Preventing plastic ingestion by wild elephants, deer, and native species in forest checkpost zones.
+                            </p>
+                        </div>
+                    </div>
 
-                            <div class="bg-green-800 p-4 rounded-xl">
-                                <p class="text-green-300 text-sm">
-                                    Plastic Detected
-                                </p>
-                                <p class="text-2xl font-bold">
-                                    24
-                                </p>
+                    <!-- Card 3: Plastic Avoiding Eco Alternatives -->
+                    <div class="bg-slate-900/80 border border-emerald-500/30 rounded-2xl overflow-hidden shadow-xl hover:-translate-y-2 hover:border-emerald-400 transition duration-300 group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=800&q=80" alt="Stainless Steel Eco Bottle Alternatives" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <span class="absolute top-3 left-3 bg-teal-400 text-slate-950 font-black text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
+                                🍶 Eco Product Swap
+                            </span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-base font-bold text-white group-hover:text-teal-300 transition">Approved Metal Canteens</h3>
+                            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+                                Swap single-use plastic bottles for reusable stainless steel flasks (₹200) & smart QR canteens (₹500).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Clean Rivers & Zero Plastic -->
+                    <div class="bg-slate-900/80 border border-emerald-500/30 rounded-2xl overflow-hidden shadow-xl hover:-translate-y-2 hover:border-emerald-400 transition duration-300 group">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Clean Nilgiris Mountain Stream" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <span class="absolute top-3 left-3 bg-emerald-400 text-slate-950 font-black text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider shadow">
+                                💧 Pure Mountain Rivers
+                            </span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="text-base font-bold text-white group-hover:text-emerald-300 transition">Plastic-Free Ecosystem</h3>
+                            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+                                Keeping Pykara lake, waterfalls, and mountain streams 100% free of microplastics and polybags.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =========================================
+             OFFICIAL E-PASS TABLE + NEW AI PLASTIC FEATURES (ANIMATED ECO GLASSMORPHISM)
+        ========================================== -->
+        <section id="rules-table" class="bg-gradient-to-b from-slate-950 via-emerald-950/70 to-slate-950 text-white py-20 relative overflow-hidden border-t border-b border-emerald-800/40">
+            <!-- Floating Decorative Background Glows -->
+            <div class="absolute top-12 left-10 w-72 h-72 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none float-slow"></div>
+            <div class="absolute bottom-10 right-10 w-80 h-80 rounded-full bg-teal-400/10 blur-3xl pointer-events-none float-animation"></div>
+
+            <!-- Floating Eco Badges -->
+            <div class="absolute top-20 right-[5%] float-animation pointer-events-none opacity-70 hidden lg:block z-10">
+                <div class="bg-emerald-500/15 backdrop-blur-md border border-emerald-400/30 px-4 py-2 rounded-2xl flex items-center gap-2 text-xs font-bold text-emerald-300 shadow-lg">
+                    <span>🌿</span> Zero-Plastic Mandate Active
+                </div>
+            </div>
+            <div class="absolute bottom-16 left-[5%] float-slow pointer-events-none opacity-70 hidden lg:block z-10">
+                <div class="bg-teal-500/15 backdrop-blur-md border border-teal-400/30 px-4 py-2 rounded-2xl flex items-center gap-2 text-xs font-bold text-teal-300 shadow-lg">
+                    <span>🤖</span> Edge AI Scanner Integration
+                </div>
+            </div>
+
+            <div class="max-w-6xl mx-auto px-6 relative z-10">
+
+                <div class="text-center max-w-4xl mx-auto mb-10 reveal">
+                    <span class="bg-emerald-500/15 text-emerald-300 border border-emerald-400/30 px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-widest inline-block shadow-sm">
+                        OFFICIAL OOTY E-PASS & AI INTEGRATION SPECIFICATION
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-white mt-3 tracking-tight">
+                        Ooty E-Pass Rules & <span class="text-emerald-300 drop-shadow-md">AI Plastic Screening Table</span>
+                    </h2>
+                    <p class="text-slate-300 mt-3 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+                        The Nilgiris District Administration mandates vehicle E-Passes. Below is the official system summary, updated with the <strong class="text-emerald-300">Sir's requested AI Plastic Detection Features highlighted in green</strong>.
+                    </p>
+                </div>
+
+                <!-- GLASSMORPHISM TABLE CARD WITH GLOW & ANIMATED HOVER -->
+                <div class="overflow-x-auto shadow-xl rounded-2xl border border-emerald-500/25 reveal bg-slate-900/70 backdrop-blur-xl p-1.5 sm:p-2 glow-animation">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-950/80 text-emerald-300 text-sm uppercase font-extrabold tracking-wider border-b border-emerald-800/50">
+                                <th class="py-4 px-6 rounded-tl-xl">ITEM</th>
+                                <th class="py-4 px-6 rounded-tr-xl">STATUS & AI SPECIFICATION</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/50 text-sm md:text-base">
+                            <tr class="hover:bg-slate-800/40 hover:translate-x-1 transition-all duration-300">
+                                <td class="py-3.5 px-6 font-semibold text-slate-200">E-Pass Mandatory?</td>
+                                <td class="py-3.5 px-6 text-slate-300">Yes — all tourist vehicles (TN and non-TN)</td>
+                            </tr>
+                            <tr class="bg-slate-800/20 hover:bg-slate-800/40 hover:translate-x-1 transition-all duration-300">
+                                <td class="py-3.5 px-6 font-semibold text-slate-200">Local Exemption</td>
+                                <td class="py-3.5 px-6 text-slate-300">Yes — TN-43 registered vehicles exempt</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 hover:translate-x-1 transition-all duration-300">
+                                <td class="py-3.5 px-6 font-semibold text-slate-200">Application Fee</td>
+                                <td class="py-3.5 px-6 text-slate-300">Free (₹0)</td>
+                            </tr>
+                            <tr class="bg-slate-800/20 hover:bg-slate-800/40 hover:translate-x-1 transition-all duration-300">
+                                <td class="py-3.5 px-6 font-semibold text-slate-200">Official Website</td>
+                                <td class="py-3.5 px-6 text-emerald-300 font-semibold underline hover:text-emerald-200 transition"><a href="https://epass.tnega.org" target="_blank" class="inline-flex items-center gap-1">epass.tnega.org ↗</a></td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 hover:translate-x-1 transition-all duration-300">
+                                <td class="py-3.5 px-6 font-semibold text-slate-200">Daily Limit (Weekday)</td>
+                                <td class="py-3.5 px-6 text-slate-300">6,000 vehicles</td>
+                            </tr>
+                            <tr class="bg-slate-800/20 hover:bg-slate-800/40 hover:translate-x-1 transition-all duration-300">
+                                <td class="py-3.5 px-6 font-semibold text-slate-200">Daily Limit (Weekend)</td>
+                                <td class="py-3.5 px-6 text-slate-300">8,000 vehicles</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 hover:translate-x-1 transition-all duration-300">
+                                <td class="py-3.5 px-6 font-semibold text-slate-200">Green Tax</td>
+                                <td class="py-3.5 px-6 text-slate-300">Separate — collected in cash at checkpost</td>
+                            </tr>
+                            <tr class="bg-slate-800/20 hover:bg-slate-800/40 hover:translate-x-1 transition-all duration-300">
+                                <td class="py-3.5 px-6 font-semibold text-slate-200">Year-Round or Seasonal?</td>
+                                <td class="py-3.5 px-6 text-slate-300">Year-round as of January 2026</td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/40 hover:translate-x-1 transition-all duration-300">
+                                <td class="py-3.5 px-6 font-semibold text-slate-200">Active Checkposts</td>
+                                <td class="py-3.5 px-6 text-emerald-200 font-medium">Kallar, Kunjapanai, Masinagudi, Mel Gudalur, Geddai</td>
+                            </tr>
+
+                            <!-- NEW INTEGRATED AI PLASTIC MONITORING FEATURES HIGHLIGHTED BELOW WITH DISTINCT COLOR CODING -->
+                            <tr class="bg-emerald-500/15 border-l-4 border-emerald-400 hover:bg-emerald-500/25 hover:scale-[1.005] transition-all duration-300 text-white shadow-sm">
+                                <td class="py-3.5 px-6 font-bold text-emerald-200 flex items-center gap-2">
+                                    <span class="text-lg animate-bounce">🤖</span> <span>NEW: AI Plastic Detection?</span>
+                                </td>
+                                <td class="py-3.5 px-6 text-emerald-100 font-semibold">
+                                    <span class="bg-emerald-400/20 border border-emerald-400/40 text-emerald-300 px-2.5 py-0.5 rounded-full text-xs font-bold mr-2 animate-pulse">AI ACTIVE</span>
+                                    Mandatory — Edge AI YOLOv8 cameras scan baggage/boots at all 5 Checkposts
+                                </td>
+                            </tr>
+                            <tr class="bg-rose-500/15 border-l-4 border-rose-400 hover:bg-rose-500/25 hover:scale-[1.005] transition-all duration-300 text-white shadow-sm">
+                                <td class="py-3.5 px-6 font-bold text-rose-200 flex items-center gap-2">
+                                    <span class="text-lg animate-pulse">🍾</span> <span>NEW: Prohibited Items Monitored</span>
+                                </td>
+                                <td class="py-3.5 px-6 text-rose-100 font-semibold">
+                                    <span class="bg-rose-500/20 border border-rose-400/40 text-rose-300 px-2.5 py-0.5 rounded-full text-xs font-bold mr-2">PROHIBITED</span>
+                                    Single-Use PET Bottles, Styrofoam Plates, Plastic Spoons/Forks, Drink Cups, Polybags
+                                </td>
+                            </tr>
+                            <tr class="bg-amber-500/15 border-l-4 border-amber-400 hover:bg-amber-500/25 hover:scale-[1.005] transition-all duration-300 text-white shadow-sm">
+                                <td class="py-3.5 px-6 font-bold text-amber-200 flex items-center gap-2">
+                                    <span class="text-lg">💰</span> <span>NEW: Eco Product Acceptance</span>
+                                </td>
+                                <td class="py-3.5 px-6 text-amber-100 font-semibold">
+                                    <span class="bg-emerald-400/20 border border-emerald-400/40 text-emerald-300 px-2.5 py-0.5 rounded-full text-xs font-bold mr-2">GREEN & WHITE OPTIONS</span>
+                                    Free Swap / Jute Bag (₹10) / Stainless Flask (₹200) / Smart QR Canteen (₹500)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =========================================
+             INTERACTIVE ONLINE OOTY E-PASS REGISTRATION FORM WITH PLASTIC DECLARATION
+        ========================================== -->
+        <section id="epass-form" class="bg-slate-950 py-20 text-white relative border-t border-emerald-800/30">
+            <div class="max-w-4xl mx-auto px-6 reveal">
+
+                <div class="text-center mb-10">
+                    <span class="bg-emerald-500/15 text-emerald-300 border border-emerald-400/30 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest inline-block shadow-sm">ONLINE E-PASS REGISTRATION</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold mt-3 text-white">Apply Ooty E-Pass & Pre-Declare Eco Items</h2>
+                    <p class="text-slate-300 text-sm mt-2">Fill in vehicle details to receive your digital QR E-Pass with AI Plastic Compliance Badge.</p>
+                </div>
+
+                <div class="bg-slate-900/60 backdrop-blur-xl border border-emerald-500/25 rounded-3xl p-8 shadow-2xl">
+                    <form onsubmit="generateEpass(event)" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-bold text-emerald-300 uppercase mb-2">Vehicle Registration Number *</label>
+                                <input type="text" id="pass-veh" placeholder="e.g. KA-01-MJ-4820" required class="w-full bg-slate-950/80 border border-emerald-800/60 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
                             </div>
-
-                            <div class="bg-green-800 p-4 rounded-xl">
-                                <p class="text-green-300 text-sm">
-                                    Risk Level
-                                </p>
-                                <p class="text-2xl font-bold">
-                                    Low
-                                </p>
+                            <div>
+                                <label class="block text-xs font-bold text-emerald-300 uppercase mb-2">Select Entry Checkpost *</label>
+                                <select id="pass-gate" class="w-full bg-slate-950/80 border border-emerald-800/60 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-400">
+                                    <option value="Kallar (Mettupalayam-Ooty Road)">Kallar (Mettupalayam Road)</option>
+                                    <option value="Kunjapanai (Kotagiri Road)">Kunjapanai (Kotagiri Road)</option>
+                                    <option value="Masinagudi (Gudalur-Ooty Road)">Masinagudi (Tiger Reserve Gate)</option>
+                                    <option value="Mel Gudalur Checkpost">Mel Gudalur Checkpost</option>
+                                    <option value="Geddai Checkpost">Geddai Checkpost</option>
+                                </select>
                             </div>
-
                         </div>
 
-                    </article>
+                        <!-- Pre-Declare Plastic/Eco Items -->
+                        <div class="bg-slate-950/60 border border-emerald-800/50 p-5 rounded-2xl">
+                            <p class="text-xs font-bold text-emerald-300 uppercase mb-3 flex items-center gap-2">
+                                <span>🌿</span> Pre-Declare Items (Carrying Single-Use Plastic Triggers Violation Warning!)
+                            </p>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                                <label class="flex items-center gap-2 cursor-pointer bg-slate-900/80 p-2.5 rounded-lg border border-emerald-800/60">
+                                    <input type="checkbox" id="check-metal" checked class="accent-emerald-400">
+                                    <span class="text-slate-200">Metal Flask (Approved)</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer bg-slate-900/80 p-2.5 rounded-lg border border-emerald-800/60">
+                                    <input type="checkbox" id="check-cloth" class="accent-emerald-400">
+                                    <span class="text-slate-200">Cloth Bags (Approved)</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer bg-rose-950/40 p-2.5 rounded-lg border border-rose-800/60 text-rose-300" onchange="if(this.querySelector('input').checked) triggerTouristAlert('Single-Use Plastic Bottles declared in form')">
+                                    <input type="checkbox" id="check-plastic-bot" class="accent-rose-500">
+                                    <span>Carrying Plastic Bottles ⚠️</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer bg-rose-950/40 p-2.5 rounded-lg border border-rose-800/60 text-rose-300" onchange="if(this.querySelector('input').checked) triggerTouristAlert('Disposable Plastic Cutlery declared in form')">
+                                    <input type="checkbox" id="check-plastic-cut" class="accent-rose-500">
+                                    <span>Carrying Plastic Cutlery ⚠️</span>
+                                </label>
+                            </div>
+                        </div>
 
+                        <button type="submit" class="w-full bg-emerald-400 text-slate-950 font-extrabold py-4 rounded-xl hover:bg-emerald-300 transition shadow-lg text-center">
+                            Generate Ooty E-Pass with AI Compliance Pass →
+                        </button>
+                    </form>
+
+                    <!-- Generated E-Pass Modal Card -->
+                    <div id="epass-result" class="hidden mt-8 bg-slate-950 border-2 border-emerald-400 rounded-2xl p-6 text-center shadow-xl">
+                        <div class="flex justify-between items-center text-xs font-bold text-emerald-400 mb-4 border-b border-slate-800 pb-3">
+                            <span>NILGIRIS DISTRICT GOVT E-PASS</span>
+                            <span>PASS ID: OOTY-2026-8942</span>
+                        </div>
+                        <span class="text-7xl block my-2">🔲</span>
+                        <h4 class="text-xl font-bold text-white mt-2" id="res-veh-num">KA-01-MJ-4820</h4>
+                        <p class="text-xs text-emerald-200 mt-1" id="res-gate-name">Checkpost: Kallar (Mettupalayam-Ooty Road)</p>
+                        <div class="mt-4 bg-emerald-400/20 border border-emerald-400/40 text-emerald-300 font-bold text-xs py-2 px-4 rounded-full inline-block">
+                            ✓ VERIFIED AI ZERO-PLASTIC ENTRY APPROVED
+                        </div>
+                    </div>
                 </div>
 
             </div>
         </section>
 
-
-        <!-- Problem -->
-        <section id="problem" class="bg-white text-gray-800 py-16">
-
-            <div class="max-w-6xl mx-auto px-6 text-center">
-
-                <p class="text-green-600 font-semibold">
-                    THE CHALLENGE
-                </p>
-
-                <h2 class="text-3xl font-bold text-green-900 mt-2">
-                    Plastic is a growing threat to nature
-                </h2>
-
-                <p class="max-w-2xl mx-auto mt-4 text-gray-600">
-                    Manual checking at tourist entry points can be
-                    slow and difficult. Plastic entering protected
-                    areas can threaten wildlife and ecosystems.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- Solution -->
-        <section id="solution" class="bg-green-800 py-16">
-
-            <div class="max-w-6xl mx-auto px-6 text-center">
-
-                <p class="text-green-300 font-semibold">
-                    OUR SOLUTION
-                </p>
-
-                <h2 class="text-3xl font-bold mt-2">
-                    AI-powered environmental protection
-                </h2>
-
-                <p class="max-w-2xl mx-auto mt-4 text-green-100">
-                    EcoTour AI combines detection, monitoring and
-                    prediction to help tourism authorities protect
-                    natural destinations.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- Features -->
-        <section id="features" class="bg-green-50 text-gray-800 py-16">
-
-            <div class="max-w-6xl mx-auto px-6">
-
-                <h2 class="text-3xl font-bold text-center text-green-900">
-                    What EcoTour AI Does
-                </h2>
-
-                <div class="grid md:grid-cols-3 gap-6 mt-10">
-
-                    <article class="bg-white p-6 rounded-xl shadow">
-                        <div class="text-3xl">🤖</div>
-                        <h3 class="text-xl font-bold mt-4">
-                            Detect
-                        </h3>
-                        <p class="mt-3 text-gray-600">
-                            AI identifies prohibited plastic at
-                            tourist entry points.
-                        </p>
-                    </article>
-
-                    <article class="bg-white p-6 rounded-xl shadow">
-                        <div class="text-3xl">📊</div>
-                        <h3 class="text-xl font-bold mt-4">
-                            Monitor
-                        </h3>
-                        <p class="mt-3 text-gray-600">
-                            Store violation information for better
-                            environmental monitoring.
-                        </p>
-                    </article>
-
-                    <article class="bg-white p-6 rounded-xl shadow">
-                        <div class="text-3xl">📍</div>
-                        <h3 class="text-xl font-bold mt-4">
-                            Predict
-                        </h3>
-                        <p class="mt-3 text-gray-600">
-                            Identify high-risk periods and locations
-                            for proactive action.
-                        </p>
-                    </article>
-
+        <!-- =========================================
+             5 ACTIVE OOTY CHECKPOSTS
+        ========================================== -->
+        <section id="checkposts" class="bg-slate-900/40 border-t border-emerald-800/30 py-16">
+            <div class="max-w-7xl mx-auto px-6">
+                <p class="text-center text-xs font-bold text-emerald-300 uppercase tracking-widest mb-8">AI CAMERAS DEPLOYED AT ALL 5 OOTY CHECKPOSTS</p>
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 text-center text-xs font-bold">
+                    <div class="bg-slate-900/80 border border-emerald-700/40 text-emerald-200 p-4 rounded-xl">📍 Kallar Gate</div>
+                    <div class="bg-slate-900/80 border border-emerald-700/40 text-emerald-200 p-4 rounded-xl">📍 Kunjapanai Gate</div>
+                    <div class="bg-slate-900/80 border border-emerald-700/40 text-emerald-200 p-4 rounded-xl">📍 Masinagudi Gate</div>
+                    <div class="bg-slate-900/80 border border-emerald-700/40 text-emerald-200 p-4 rounded-xl">📍 Mel Gudalur Gate</div>
+                    <div class="bg-slate-900/80 border border-emerald-700/40 text-emerald-200 p-4 rounded-xl">📍 Geddai Gate</div>
                 </div>
-
             </div>
-
         </section>
 
     </main>
 
+    <!-- =========================================
+         🚨 TOURIST PLASTIC VIOLATION ALERT MODAL POPUP
+    ========================================== -->
+    <div id="tourist-alert-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="bg-slate-900 border-2 border-red-500 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl animate-bounce-short">
+            
+            <!-- Alert Header -->
+            <div class="bg-red-600 text-white px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-2 font-bold text-sm md:text-base">
+                    <span class="text-xl">🚨</span>
+                    <span>NILGIRIS DISTRICT TOURIST PLASTIC ALERT</span>
+                </div>
+                <button onclick="closeTouristAlert()" class="text-white hover:text-red-200 text-2xl font-bold">&times;</button>
+            </div>
 
-    <!-- Footer -->
-    <footer class="bg-green-950 text-center py-6">
+            <!-- Alert Body -->
+            <div class="p-6 text-slate-100 space-y-4">
+                <div class="bg-red-500/10 border border-red-500/30 p-4 rounded-2xl">
+                    <h4 class="text-red-400 font-extrabold text-sm uppercase flex items-center gap-2">
+                        <span>⚠️</span> PROHIBITED SINGLE-USE PLASTIC DETECTED!
+                    </h4>
+                    <p class="text-xs text-slate-300 mt-1" id="alert-reason-text">
+                        Single-Use PET Plastic Bottles / Disposable Cutlery flagged by Edge AI Camera.
+                    </p>
+                </div>
 
-        <p class="font-semibold">
-            🌿 EcoTour AI
-        </p>
+                <div class="space-y-2 text-xs leading-relaxed text-slate-300">
+                    <p><strong>Under Madras High Court & Nilgiris District Rules:</strong></p>
+                    <ul class="list-disc list-inside space-y-1 text-slate-300">
+                        <li>Single-use plastic water bottles, cups, spoons, plates & polybags are <strong>STRICTLY BANNED</strong> in Ooty & Kodaikanal.</li>
+                        <li><strong>Penalty: ₹500 Fine + Confiscation</strong> at checkposts (Kallar, Kunjapanai, Masinagudi, Mel Gudalur, Geddai).</li>
+                    </ul>
+                </div>
 
-        <p class="text-green-300 text-sm mt-2">
-            Smarter technology for a cleaner planet.
-        </p>
+                <!-- Green Eco Solution for Tourists -->
+                <div class="bg-green-900/40 border border-green-500/30 p-4 rounded-2xl text-xs space-y-2">
+                    <p class="text-green-300 font-bold flex items-center gap-1.5">
+                        <span>🌿</span> TOURIST GUIDANCE & SWAP BOOTH OPTIONS:
+                    </p>
+                    <p class="text-slate-200">1. Swap plastic bottles for reusable stainless steel canteens (₹200) or smart QR bottles (₹500).</p>
+                    <p class="text-slate-200">2. Free bottle swaps and ₹10 jute bags available at Kallar checkpost.</p>
+                </div>
 
+                <!-- Buttons -->
+                <div class="pt-2 flex flex-col gap-2">
+                    <button onclick="closeTouristAlert()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl transition text-xs uppercase tracking-wider">
+                        I Understand & Will Swap Plastic at Checkpost
+                    </button>
+                    <button onclick="preselectEcoOptions()" class="w-full bg-green-500 hover:bg-green-400 text-green-950 font-bold py-3 rounded-xl transition text-xs uppercase tracking-wider">
+                        🌿 Pre-Declare Stainless Steel Eco Flask (₹200) Instead
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+    <footer class="bg-green-950 border-t border-green-800 py-8">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <p class="font-bold text-lg">🌿 Ooty EcoPass AI</p>
+                <p class="text-green-300 text-sm mt-1">Official Nilgiris Eco-Tourism AI Plastic Prevention Platform.</p>
+            </div>
+            <p class="text-green-400 text-sm">© 2026 Nilgiris District Administration</p>
+        </div>
     </footer>
 
+    <!-- =========================================
+         JAVASCRIPT LOGIC FOR TOURIST PLASTIC ALERTS & ECO PRODUCT SELECTION
+    ========================================== -->
+    <script>
+        // Scroll reveal animation
+        const revealElements = document.querySelectorAll(".reveal");
+        const revealObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealElements.forEach(function(element) {
+            revealObserver.observe(element);
+        });
+
+        const plasticData = {
+            'bottle': { emoji: '🍾', title: 'Single-Use PET Bottle', conf: '98.6%' },
+            'spoon': { emoji: '🥄', title: 'Disposable Plastic Spoon', conf: '97.4%' },
+            'plate': { emoji: '🍽️', title: 'Styrofoam Plastic Plate', conf: '99.1%' },
+            'cup': { emoji: '🥤', title: 'Disposable Plastic Cup', conf: '96.8%' }
+        };
+
+        // Select Plastic Item (Changes to RED Alert State)
+        function selectPlastic(key, emoji, title, conf) {
+            const emojiEl = document.getElementById('item-emoji');
+            const titleEl = document.getElementById('item-title');
+            const tagLabel = document.getElementById('item-tag-label');
+            const itemStatus = document.getElementById('item-status');
+            const itemBox = document.getElementById('item-bounding-box');
+            const acceptCard = document.getElementById('acceptance-card');
+            const acceptStatusText = document.getElementById('acceptance-status-text');
+
+            itemBox.className = "relative inline-block p-3 sm:p-4 border-2 border-dashed border-rose-400/80 bg-rose-500/10 rounded-2xl shadow-md";
+            tagLabel.className = "absolute -top-3 left-3 bg-rose-500 text-white text-[10px] font-black px-2 py-0.5 rounded shadow";
+            tagLabel.textContent = `🚨 FLAGGED: ${title.toUpperCase()} (${conf})`;
+            
+            emojiEl.textContent = emoji;
+            titleEl.textContent = title;
+            itemStatus.innerHTML = `<span class="text-rose-300 font-bold">❌ PROHIBITED ITEM DETECTED — REJECTED AT CHECKPOST</span>`;
+
+            acceptCard.className = "mt-4 p-5 rounded-2xl border-2 border-emerald-400 bg-white text-emerald-950 shadow-2xl transition-all duration-500";
+            acceptStatusText.innerHTML = `
+                <span class="text-emerald-800 font-extrabold text-xs uppercase block flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping"></span> 🚨 PROHIBITED PLASTIC DETECTED — CHOOSE APPROVED ECO PRODUCT:
+                </span>
+                <p class="text-xs text-emerald-900 font-medium mt-1">Carrying ${title} is banned in Ooty. Select an <strong>Approved Eco Product (₹200 / ₹500)</strong> below to pass checkpost:</p>
+            `;
+
+            // Automatically trigger Tourist Alert Modal when plastic is clicked
+            triggerTouristAlert(`${title} detected by Checkpost Camera AI`);
+        }
+
+        // Tourist Accepts Eco Product (Changes to GREEN & WHITE Approved State)
+        function acceptEcoProduct(type) {
+            const box = document.getElementById('item-bounding-box');
+            const tag = document.getElementById('item-tag-label');
+            const emoji = document.getElementById('item-emoji');
+            const title = document.getElementById('item-title');
+            const status = document.getElementById('item-status');
+            const acceptCard = document.getElementById('acceptance-card');
+            const acceptStatusText = document.getElementById('acceptance-status-text');
+
+            if (type === 'metal') {
+                box.className = "relative inline-block p-3 sm:p-4 border-2 border-solid border-emerald-500 bg-emerald-50 rounded-2xl shadow-md shadow-emerald-400/20";
+                tag.className = "absolute -top-3 left-3 bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded shadow";
+                tag.textContent = "✓ ACCEPTED & APPROVED: STAINLESS FLASK (₹200)";
+                emoji.textContent = "🍶";
+                title.textContent = "Stainless Steel Thermal Flask (₹200)";
+                status.innerHTML = "<span class='text-emerald-700 font-extrabold'>🟢 APPROVED & ACCEPTED — NILGIRIS ZERO-PLASTIC COMPLIANT</span>";
+
+                acceptCard.className = "mt-4 p-5 rounded-2xl border-2 border-emerald-500 bg-white text-emerald-950 shadow-2xl transition-all duration-500";
+                acceptStatusText.innerHTML = `
+                    <span class="text-emerald-800 font-extrabold text-xs uppercase block flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping"></span> 🎉 TOURIST ACCEPTED STAINLESS STEEL FLASK (₹200)
+                    </span>
+                    <p class="text-xs text-emerald-900 mt-1 font-semibold">Voucher #OOTY-FLASK-200 confirmed. Collect your Stainless Steel Thermal Flask (₹200) at Kallar Checkpost.</p>
+                `;
+            } else if (type === 'smart') {
+                box.className = "relative inline-block p-3 sm:p-4 border-2 border-solid border-emerald-600 bg-emerald-50 rounded-2xl shadow-md shadow-emerald-500/20";
+                tag.className = "absolute -top-3 left-3 bg-emerald-700 text-white text-[10px] font-black px-2 py-0.5 rounded shadow";
+                tag.textContent = "✓ ACCEPTED & APPROVED: SMART QR CANTEEN (₹500)";
+                emoji.textContent = "⭐";
+                title.textContent = "Smart QR Eco Canteen (₹500)";
+                status.innerHTML = "<span class='text-emerald-800 font-extrabold'>🟢 APPROVED & ACCEPTED — PREMIUM SMART CANTEEN REGISTERED</span>";
+
+                acceptCard.className = "mt-4 p-5 rounded-2xl border-2 border-emerald-600 bg-emerald-50 text-emerald-950 shadow-2xl transition-all duration-500";
+                acceptStatusText.innerHTML = `
+                    <span class="text-emerald-800 font-extrabold text-xs uppercase block flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping"></span> 🎉 TOURIST ACCEPTED SMART QR ECO CANTEEN (₹500)
+                    </span>
+                    <p class="text-xs text-emerald-900 mt-1 font-semibold">Voucher #OOTY-SMART-500 confirmed. Smart QR bottle issued with digital refill tracking access.</p>
+                `;
+            } else if (type === 'free') {
+                box.className = "relative inline-block p-3 sm:p-4 border-2 border-solid border-emerald-400 bg-emerald-50 rounded-2xl shadow-md";
+                tag.className = "absolute -top-3 left-3 bg-emerald-500 text-white text-[10px] font-black px-2 py-0.5 rounded shadow";
+                tag.textContent = "✓ ACCEPTED & APPROVED: REUSABLE BOTTLE (FREE)";
+                emoji.textContent = "🔄";
+                title.textContent = "Eco Reusable Water Bottle (Free Swap)";
+                status.innerHTML = "<span class='text-emerald-700 font-extrabold'>🟢 APPROVED & ACCEPTED — FREE SWAP CONFIRMED</span>";
+
+                acceptCard.className = "mt-4 p-5 rounded-2xl border-2 border-emerald-400 bg-white text-emerald-950 shadow-2xl transition-all duration-500";
+                acceptStatusText.innerHTML = `
+                    <span class="text-emerald-800 font-extrabold text-xs uppercase block flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span> 🎉 TOURIST ACCEPTED FREE BOTTLE SWAP
+                    </span>
+                    <p class="text-xs text-emerald-900 mt-1 font-semibold">Free eco-bottle swap voucher generated for vehicle entry at Kallar Checkpost.</p>
+                `;
+            } else if (type === 'cloth') {
+                box.className = "relative inline-block p-3 sm:p-4 border-2 border-solid border-emerald-400 bg-emerald-50 rounded-2xl shadow-md";
+                tag.className = "absolute -top-3 left-3 bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded shadow";
+                tag.textContent = "✓ ACCEPTED & APPROVED: JUTE CLOTH BAG (₹10)";
+                emoji.textContent = "🛍️";
+                title.textContent = "Eco-Friendly Jute Carry Bag (₹10)";
+                status.innerHTML = "<span class='text-emerald-700 font-extrabold'>🟢 APPROVED & ACCEPTED — BANNED POLYBAG SWAPPED</span>";
+
+                acceptCard.className = "mt-4 p-5 rounded-2xl border-2 border-emerald-400 bg-white text-emerald-950 shadow-2xl transition-all duration-500";
+                acceptStatusText.innerHTML = `
+                    <span class="text-emerald-800 font-extrabold text-xs uppercase block flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping"></span> 🎉 TOURIST ACCEPTED JUTE CLOTH BAG (₹10)
+                    </span>
+                    <p class="text-xs text-emerald-900 mt-1 font-semibold">Cloth bag voucher confirmed for vehicle entry approval at Nilgiris checkpoints.</p>
+                `;
+            }
+        }
+
+        // Trigger Tourist Plastic Alert Modal
+        function triggerTouristAlert(reason) {
+            const modal = document.getElementById('tourist-alert-modal');
+            const reasonText = document.getElementById('alert-reason-text');
+            
+            if (reasonText && reason) {
+                reasonText.textContent = `${reason}. Carrying prohibited single-use plastic in Nilgiris is punishable under High Court guidelines.`;
+            }
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeTouristAlert() {
+            const modal = document.getElementById('tourist-alert-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        function preselectEcoOptions() {
+            closeTouristAlert();
+            const checkBot = document.getElementById('check-plastic-bot');
+            const checkCut = document.getElementById('check-plastic-cut');
+            const checkMetal = document.getElementById('check-metal');
+            
+            if (checkBot) checkBot.checked = false;
+            if (checkCut) checkCut.checked = false;
+            if (checkMetal) checkMetal.checked = true;
+
+            acceptEcoProduct('metal');
+            alert("🌿 Swapped to Approved Eco Option! Stainless Steel Flask (₹200) pre-declared and accepted.");
+        }
+
+        function generateEpass(e) {
+            e.preventDefault();
+            const veh = document.getElementById('pass-veh').value;
+            const gate = document.getElementById('pass-gate').value;
+            const hasPlasticBot = document.getElementById('check-plastic-bot').checked;
+            const hasPlasticCut = document.getElementById('check-plastic-cut').checked;
+
+            if (hasPlasticBot || hasPlasticCut) {
+                triggerTouristAlert("You have declared prohibited plastic items in your E-Pass application");
+                return;
+            }
+
+            document.getElementById('res-veh-num').textContent = veh.toUpperCase();
+            document.getElementById('res-gate-name').textContent = `Checkpost: ${gate}`;
+            document.getElementById('epass-result').classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
