@@ -194,82 +194,117 @@
         }
 
 
-        /* =========================
-           Exercise 3 + Creative UI
-        ========================== */
-        .dashboard-card {
+        /* JavaScript event-handling demo */
+        .event-card {
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+        }
+
+        .event-card.event-hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 45px rgba(16, 120, 70, .18) !important;
+            border-color: #34d399 !important;
+        }
+
+        .event-status {
+            transition: all .25s ease;
+        }
+
+        body.dark-mode .event-status {
+            background: #0f2f20 !important;
+            border-color: #2c7a55 !important;
+            color: #d1fae5 !important;
+        }
+
+        #vehicle-char-count.good {
+            color: #059669 !important;
+        }
+
+        #vehicle-char-count.warning {
+            color: #d97706 !important;
+        }
+
+        #vehicle-char-count.danger {
+            color: #dc2626 !important;
+        }
+
+        /* Live eco-product interaction */
+        .eco-product-card {
+            position: relative;
+            overflow: hidden;
             transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
             cursor: pointer;
         }
-        .dashboard-card:hover,
-        .dashboard-card.active-card {
-            transform: translateY(-5px);
-            border-color: #34d399 !important;
-            box-shadow: 0 20px 45px rgba(16, 120, 70, .16) !important;
-        }
-        .dashboard-number { transition: transform .25s ease; }
-        .dashboard-card:hover .dashboard-number { transform: scale(1.05); }
-        .event-focus {
-            outline: 3px solid rgba(16,185,129,.22) !important;
-            border-color: #10b981 !important;
-            box-shadow: 0 0 0 4px rgba(16,185,129,.08) !important;
-        }
-        .event-hover {
-            transform: translateY(-5px) scale(1.01);
-            border-color: #34d399 !important;
-            box-shadow: 0 18px 42px rgba(16,120,70,.16) !important;
-        }
-        .nav-active {
-            color: #047857 !important;
-            font-weight: 800 !important;
-            position: relative;
-        }
-        .nav-active::after {
-            content: '';
+        .eco-product-card::after {
+            content: "DOUBLE-CLICK TO SELECT";
             position: absolute;
-            left: 0; right: 0; bottom: -7px;
-            height: 2px; border-radius: 999px;
-            background: #10b981;
+            left: 50%;
+            bottom: 7px;
+            transform: translateX(-50%) translateY(8px);
+            opacity: 0;
+            font-size: 8px;
+            font-weight: 900;
+            letter-spacing: .08em;
+            color: #047857;
+            background: rgba(255,255,255,.92);
+            border: 1px solid #a7f3d0;
+            padding: 3px 6px;
+            border-radius: 999px;
+            transition: all .2s ease;
+            pointer-events: none;
+            white-space: nowrap;
         }
-        .live-update-flash { animation: liveFlash .45s ease; }
-        @keyframes liveFlash {
+        .eco-product-card.event-hover::after,
+        .eco-product-card.selected::after {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .eco-product-card.event-hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 18px 35px rgba(16, 122, 70, .20) !important;
+            border-color: #34d399 !important;
+        }
+        .eco-product-card.selected {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(16, 122, 70, .24) !important;
+            outline: 3px solid rgba(52,211,153,.18);
+        }
+        .eco-product-card.selected::before {
+            content: "✓ SELECTED";
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            z-index: 5;
+            font-size: 8px;
+            font-weight: 900;
+            color: white;
+            background: #059669;
+            padding: 4px 6px;
+            border-radius: 999px;
+        }
+
+        .eco-preview {
+            transition: all .25s ease;
+        }
+        .eco-preview.flash {
+            transform: scale(1.01);
+            box-shadow: 0 10px 30px rgba(16, 122, 70, .12);
+        }
+
+        .event-focus {
+            outline: 3px solid rgba(16, 185, 129, .25) !important;
+            border-color: #10b981 !important;
+            box-shadow: 0 0 0 3px rgba(16,185,129,.10) !important;
+        }
+
+        .dashboard-pulse {
+            animation: dashboardPulse .45s ease-out;
+        }
+
+        @keyframes dashboardPulse {
             0% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+            50% { transform: scale(1.06); }
             100% { transform: scale(1); }
         }
-        .live-dot { animation: liveDot 1.4s infinite; }
-        @keyframes liveDot {
-            0%,100% { opacity:1; transform:scale(1); }
-            50% { opacity:.45; transform:scale(.8); }
-        }
-        .product-choice {
-            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
-            cursor: pointer;
-        }
-        .product-choice:hover,
-        .product-choice.selected {
-            transform: translateY(-4px);
-            border-color: #10b981 !important;
-            box-shadow: 0 14px 30px rgba(16,120,70,.12);
-        }
-        .product-choice.selected { background: #ecfdf5 !important; }
-        body.dark-mode {
-            background: #052e16 !important;
-            color: #ecfdf5 !important;
-        }
-        body.dark-mode header { background: rgba(6, 78, 59, .95) !important; border-color: rgba(52,211,153,.25) !important; }
-        body.dark-mode #dashboard,
-        body.dark-mode #gallery,
-        body.dark-mode #rules-table,
-        body.dark-mode #epass-form,
-        body.dark-mode #checkposts,
-        body.dark-mode .api-strip { background: #062e1b !important; }
-        body.dark-mode .light-card { background: #0b3b27 !important; color: #ecfdf5 !important; border-color: rgba(52,211,153,.28) !important; }
-        body.dark-mode .light-text { color: #d1fae5 !important; }
-        body.dark-mode input,
-        body.dark-mode select { background: #06251a !important; color: #ecfdf5 !important; }
-        body.dark-mode .dashboard-number { color: #a7f3d0 !important; }
-        body.dark-mode .nav-active { color: #6ee7b7 !important; }
 
         /* Product buttons: premium white/green visual hierarchy */
         #acceptance-card {
@@ -284,6 +319,172 @@
         #tourist-alert-modal,
         #api-info-modal {
             color: #fff;
+        }
+    </style>
+
+
+    <style>
+        /* =========================================
+           CREATIVE FEATURE: DARK MODE TOGGLE
+        ========================================== */
+        body {
+            transition: background-color .35s ease, color .35s ease;
+        }
+
+        .dark-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .4rem;
+            min-width: 42px;
+            height: 42px;
+            padding: 0 .85rem;
+            border-radius: 999px;
+            border: 1px solid #86efac;
+            background: #ecfdf5;
+            color: #166534;
+            font-weight: 800;
+            font-size: .78rem;
+            box-shadow: 0 8px 20px rgba(22,101,52,.12);
+            transition: all .25s ease;
+            cursor: pointer;
+        }
+
+        .dark-toggle-btn:hover {
+            transform: translateY(-1px);
+            background: #dcfce7;
+        }
+
+        /* Dark mode keeps the mountain hero image unchanged. */
+        body.dark-mode {
+            background: #06150f !important;
+            color: #ecfdf5 !important;
+        }
+
+        body.dark-mode header {
+            background: rgba(5, 24, 16, .95) !important;
+            border-color: rgba(74, 222, 128, .25) !important;
+        }
+
+        body.dark-mode header a,
+        body.dark-mode header .text-emerald-950,
+        body.dark-mode header .text-emerald-900\/80 {
+            color: #d1fae5 !important;
+        }
+
+        body.dark-mode #gallery,
+        body.dark-mode #epass-form,
+        body.dark-mode #checkposts,
+        body.dark-mode #rules-table {
+            background: #071a12 !important;
+            color: #ecfdf5 !important;
+        }
+
+        body.dark-mode #gallery article,
+        body.dark-mode #epass-form .bg-white\/90,
+        body.dark-mode #rules-table .bg-white\/95,
+        body.dark-mode #checkposts > div > div > div {
+            background: rgba(10, 35, 24, .94) !important;
+            border-color: rgba(74, 222, 128, .30) !important;
+            color: #ecfdf5 !important;
+        }
+
+        body.dark-mode #gallery h2,
+        body.dark-mode #gallery h3,
+        body.dark-mode #rules-table h2,
+        body.dark-mode #rules-table h3,
+        body.dark-mode #epass-form h2,
+        body.dark-mode #epass-form h4,
+        body.dark-mode #checkposts h2 {
+            color: #d1fae5 !important;
+        }
+
+        body.dark-mode #gallery p,
+        body.dark-mode #epass-form p,
+        body.dark-mode #checkposts p,
+        body.dark-mode #rules-table p {
+            color: #a7f3d0 !important;
+        }
+
+        body.dark-mode #scanner {
+            background: #0b2418 !important;
+            border-color: rgba(74, 222, 128, .45) !important;
+        }
+
+        body.dark-mode #scanner-fullscreen-target {
+            background: linear-gradient(135deg, #0b2418, #103b27) !important;
+            border-color: rgba(74, 222, 128, .35) !important;
+        }
+
+        body.dark-mode #scanner-fullscreen-target .text-slate-500,
+        body.dark-mode #scanner-fullscreen-target .text-slate-600,
+        body.dark-mode #scanner .text-slate-500,
+        body.dark-mode #scanner .text-slate-600 {
+            color: #a7f3d0 !important;
+        }
+
+        body.dark-mode #scanner-fullscreen-target .bg-white,
+        body.dark-mode #scanner-fullscreen-target .bg-white\/90,
+        body.dark-mode #acceptance-card,
+        body.dark-mode #acceptance-card .bg-white {
+            background: #0d2a1c !important;
+            color: #ecfdf5 !important;
+        }
+
+        body.dark-mode #acceptance-card .text-slate-900,
+        body.dark-mode #acceptance-card .text-slate-600,
+        body.dark-mode #acceptance-card .text-emerald-950 {
+            color: #d1fae5 !important;
+        }
+
+        body.dark-mode #epass-form input,
+        body.dark-mode #epass-form select {
+            background: #092017 !important;
+            color: #ecfdf5 !important;
+            border-color: #166534 !important;
+        }
+
+        body.dark-mode #epass-form input::placeholder {
+            color: #6ee7b7 !important;
+        }
+
+        body.dark-mode #epass-form .bg-emerald-50,
+        body.dark-mode #epass-form .bg-white {
+            background: #0b2a1c !important;
+            color: #d1fae5 !important;
+        }
+
+        body.dark-mode #epass-result,
+        body.dark-mode #saved-pass-banner {
+            background: #0b2418 !important;
+            color: #ecfdf5 !important;
+            border-color: rgba(74, 222, 128, .4) !important;
+        }
+
+        body.dark-mode #api-info-modal > div {
+            background: #081a12 !important;
+            border-color: rgba(74, 222, 128, .5) !important;
+        }
+
+        body.dark-mode #api-info-modal .bg-emerald-50 {
+            background: #0b2a1c !important;
+            border-color: rgba(74, 222, 128, .3) !important;
+        }
+
+        body.dark-mode #api-info-modal .text-emerald-950,
+        body.dark-mode #api-info-modal .text-emerald-950\/75,
+        body.dark-mode #api-info-modal .text-slate-950 {
+            color: #d1fae5 !important;
+        }
+
+        .dark-mode .dark-toggle-btn {
+            background: #123524;
+            color: #ecfdf5;
+            border-color: #34d399;
+        }
+
+        .dark-mode .dark-toggle-btn:hover {
+            background: #14532d;
         }
     </style>
 
@@ -316,18 +517,17 @@
 
             <!-- Navigation -->
             <div class="flex flex-wrap justify-center gap-5 md:gap-7 font-semibold text-sm">
-                <a href="#home" class="nav-link hover:text-emerald-700 transition text-emerald-900/80">Home</a>
-                <a href="#dashboard" class="nav-link hover:text-emerald-700 transition text-emerald-900/80">Dashboard</a>
-                <a href="#gallery" class="nav-link hover:text-emerald-300 transition text-emerald-300 font-bold">Mountains & Wildlife 🏔️</a>
+                <a href="#home" class="hover:text-emerald-700 transition text-emerald-900/80">Home</a>
+                <a href="#gallery" class="hover:text-emerald-300 transition text-emerald-300 font-bold">Mountains & Wildlife 🏔️</a>
                 <a href="#rules-table" class="hover:text-emerald-700 transition text-emerald-900/80">E-Pass Rules & AI Table</a>
                 <a href="#epass-form" class="hover:text-emerald-700 transition text-emerald-900/80">Apply E-Pass</a>
                 <a href="#scanner" class="hover:text-emerald-700 transition text-emerald-900/80">Checkpost Camera AI</a>
+                <a href="#dashboard" class="hover:text-emerald-700 transition text-emerald-900/80">Dashboard</a>
                 <a href="#checkposts" class="hover:text-emerald-700 transition text-emerald-900/80">5 Checkposts</a>
             </div>
-
-            <button id="theme-toggle" type="button" onclick="toggleTheme()"
-                class="bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 px-3 py-2 rounded-xl text-xs font-black transition">
-                🌙 Dark Mode
+            <button type="button" id="darkModeToggle" onclick="toggleDarkMode()" class="dark-toggle-btn" aria-label="Toggle dark mode" title="Toggle dark mode">
+                <span id="darkModeIcon">🌙</span>
+                <span class="hidden sm:inline" id="darkModeText">Dark</span>
             </button>
         </nav>
     </header>
@@ -411,6 +611,46 @@
                         </div>
                         <p id="geo-result" class="text-xs text-emerald-200 mt-2 font-semibold"></p>
                     </div>
+
+                    <!-- JAVASCRIPT EVENT HANDLING: LIVE INTERACTION PANEL -->
+                    <div class="event-status mt-4 bg-white/95 border border-emerald-200 rounded-2xl p-4 shadow-sm">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                            <div>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-emerald-700">
+                                    SMART VISITOR INTERACTION
+                                </p>
+                                <p id="event-status-text" class="text-xs text-emerald-950/75 mt-1">
+                                    Welcome to Ooty EcoPass AI.
+                                </p>
+                            </div>
+
+                            <div id="viewport-info"
+                                class="shrink-0 bg-emerald-50 border border-emerald-200
+                                       text-emerald-700 px-3 py-2 rounded-xl
+                                       text-[11px] font-black">
+                                VIEWPORT: -- px
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3 text-center">
+                            <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-2">
+                                <p class="text-[9px] font-bold text-emerald-700 uppercase">Load</p>
+                                <p class="text-[10px] text-slate-500 mt-1">Welcome message</p>
+                            </div>
+                            <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-2">
+                                <p class="text-[9px] font-bold text-emerald-700 uppercase">Input</p>
+                                <p class="text-[10px] text-slate-500 mt-1">Live vehicle count</p>
+                            </div>
+                            <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-2">
+                                <p class="text-[9px] font-bold text-emerald-700 uppercase">Mouseover</p>
+                                <p class="text-[10px] text-slate-500 mt-1">Card highlight</p>
+                            </div>
+                            <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-2">
+                                <p class="text-[9px] font-bold text-emerald-700 uppercase">Resize</p>
+                                <p class="text-[10px] text-slate-500 mt-1">Live screen width</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Right Card: Live Checkpost Camera Simulator -->
@@ -420,20 +660,21 @@
     <!-- SAME FIRST-PAGE MOUNTAIN BACKGROUND -->
     <div class="absolute inset-0 bg-cover bg-center"
         style="background-image:
-        linear-gradient(135deg,
-            rgba(255,255,255,0.95),
-            rgba(236,253,245,0.93),
-            rgba(220,252,231,0.90)
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.94),
+            rgba(236,253,245,0.90),
+            rgba(220,252,231,0.88)
         ),
         url('https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1920&q=80');">
     </div>
 
-    <div class="absolute inset-0 bg-gradient-to-br from-white/75 via-emerald-50/55 to-green-100/65"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-white/75 via-emerald-50/60 to-green-100/65"></div>
 
     <div class="relative z-10 p-5 md:p-6">
 
         <!-- HEADER -->
-        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-3 pb-4 border-b border-emerald-700/25">
+        <div class="flex flex-col md:flex-row justify-between md:items-center gap-3 pb-4 border-b border-emerald-700/30">
             <div>
                 <p class="text-emerald-700 text-xs font-black tracking-widest uppercase">
                     CHECKPOST: KALLAR GATE (TN-43 ACCESS)
@@ -446,28 +687,35 @@
                 </p>
             </div>
 
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 self-start md:self-auto">
                 <span class="bg-emerald-100 border border-emerald-400 text-emerald-700 px-4 py-2 rounded-full text-xs font-black flex items-center gap-2">
                     <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse"></span>
                     AI ACTIVE
                 </span>
-                <button onclick="toggleScannerFullscreen()" id="fullscreen-btn" title="Fullscreen scanner"
+
+                <!-- FULLSCREEN API -->
+                <button
+                    onclick="toggleScannerFullscreen()"
+                    id="fullscreen-btn"
+                    title="Fullscreen scanner"
                     class="w-10 h-10 rounded-full bg-white border-2 border-emerald-400 text-emerald-700 font-bold hover:bg-emerald-50 transition shadow-sm">
                     ⛶
                 </button>
             </div>
         </div>
 
-        <!-- HORIZONTAL MAIN CONTENT -->
-        <div class="grid lg:grid-cols-5 gap-5 mt-5">
+        <!-- HORIZONTAL SCANNER + ECO PRODUCT AREA -->
+        <div class="grid md:grid-cols-5 gap-5 mt-5 items-stretch">
 
-            <!-- AI SCANNER -->
-            <div id="scanner-fullscreen-target"
-                class="lg:col-span-3 relative overflow-hidden bg-white/92 backdrop-blur-md border-2 border-emerald-300 rounded-3xl p-5 shadow-lg min-w-0">
+            <!-- LEFT: AI SCANNER -->
+            <div
+                id="scanner-fullscreen-target"
+                class="md:col-span-3 relative overflow-hidden bg-white/90 backdrop-blur-md border-2 border-emerald-300 rounded-3xl p-5 shadow-lg min-w-0">
 
-                <div class="absolute inset-0 pointer-events-none opacity-25">
-                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.15)_0%,transparent_65%)]"></div>
+                <div class="absolute inset-0 pointer-events-none opacity-30">
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.12)_0%,transparent_65%)]"></div>
                 </div>
+
                 <div class="laser-scan"></div>
 
                 <div class="relative z-10 flex justify-between items-center mb-4">
@@ -479,119 +727,167 @@
                             Checking tourist items...
                         </p>
                     </div>
+
                     <span class="text-xs font-black px-3 py-1 rounded-full bg-rose-50 border border-rose-300 text-rose-600">
                         ● SCANNING
                     </span>
                 </div>
 
-                <div class="relative z-10 min-h-[220px] flex flex-col items-center justify-center">
-                    <div id="scanner-item-box"
-                        class="relative p-6 rounded-3xl border-2 border-dashed border-rose-400 bg-gradient-to-br from-rose-50 to-white shadow-lg">
-                        <span id="item-tag-label"
+                <div class="relative z-10 min-h-[205px] flex flex-col items-center justify-center">
+                    <div
+                        id="scanner-item-box"
+                        class="relative p-5 md:p-6 rounded-3xl border-2 border-dashed border-rose-400 bg-gradient-to-br from-rose-50 to-white shadow-lg">
+
+                        <span
+                            id="item-tag-label"
                             class="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap bg-rose-500 text-white px-3 py-1.5 rounded-full text-[9px] md:text-[10px] font-black shadow-lg">
                             🚨 FLAGGED: PLASTIC BOTTLE (98.6%)
                         </span>
-                        <span id="item-emoji" class="block text-7xl text-center float-animation">🍾</span>
+
+                        <span id="item-emoji" class="block text-6xl md:text-7xl text-center float-animation">
+                            🍾
+                        </span>
                     </div>
 
-                    <h3 id="item-title" class="text-xl font-black text-slate-900 mt-4 text-center">
+                    <h3 id="item-title" class="text-lg md:text-xl font-black text-slate-900 mt-4 text-center">
                         Single-Use PET Bottle
                     </h3>
+
                     <p id="item-status" class="text-xs md:text-sm text-rose-500 font-extrabold mt-2 text-center">
                         ❌ PROHIBITED ITEM DETECTED — REJECTED AT CHECKPOST
                     </p>
                 </div>
 
+                <!-- HORIZONTAL SCAN SELECTOR -->
                 <div class="relative z-10 mt-5">
                     <p class="text-[10px] uppercase text-slate-500 font-black text-center mb-3 tracking-widest">
                         Select Item to Simulate AI Detection
                     </p>
+
                     <div class="grid grid-cols-4 gap-2">
                         <button onclick="selectPlastic('bottle', '🍾', 'Single-Use Water Bottle', '98.6%')"
-                            class="bg-white hover:bg-rose-50 border border-rose-300 text-rose-600 font-bold px-2 py-2.5 rounded-xl text-[11px] transition shadow-sm">🍾 Bottle</button>
+                            class="bg-white hover:bg-rose-50 border border-rose-300 text-rose-600 font-bold px-2 py-2.5 rounded-xl text-[11px] transition shadow-sm">
+                            🍾 Bottle
+                        </button>
                         <button onclick="selectPlastic('spoon', '🥄', 'Disposable Plastic Spoon', '97.4%')"
-                            class="bg-white hover:bg-rose-50 border border-rose-300 text-rose-600 font-bold px-2 py-2.5 rounded-xl text-[11px] transition shadow-sm">🥄 Spoon</button>
+                            class="bg-white hover:bg-rose-50 border border-rose-300 text-rose-600 font-bold px-2 py-2.5 rounded-xl text-[11px] transition shadow-sm">
+                            🥄 Spoon
+                        </button>
                         <button onclick="selectPlastic('plate', '🍽️', 'Styrofoam Plastic Plate', '99.1%')"
-                            class="bg-white hover:bg-rose-50 border border-rose-300 text-rose-600 font-bold px-2 py-2.5 rounded-xl text-[11px] transition shadow-sm">🍽️ Plate</button>
+                            class="bg-white hover:bg-rose-50 border border-rose-300 text-rose-600 font-bold px-2 py-2.5 rounded-xl text-[11px] transition shadow-sm">
+                            🍽️ Plate
+                        </button>
                         <button onclick="selectPlastic('cup', '🥤', 'Disposable Plastic Cup', '96.8%')"
-                            class="bg-white hover:bg-rose-50 border border-rose-300 text-rose-600 font-bold px-2 py-2.5 rounded-xl text-[11px] transition shadow-sm">🥤 Cup</button>
+                            class="bg-white hover:bg-rose-50 border border-rose-300 text-rose-600 font-bold px-2 py-2.5 rounded-xl text-[11px] transition shadow-sm">
+                            🥤 Cup
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- ECO PRODUCTS -->
-            <div id="acceptance-card"
-                class="lg:col-span-2 bg-white/95 backdrop-blur-md border-2 border-emerald-500 rounded-3xl p-5 shadow-xl flex flex-col justify-between min-w-0">
+            <!-- RIGHT: ECO PRODUCTS HORIZONTAL -->
+            <div
+                id="acceptance-card"
+                class="md:col-span-2 bg-white/95 backdrop-blur-md border-2 border-emerald-500 rounded-3xl p-5 shadow-xl flex flex-col justify-center min-w-0">
 
-                <div>
-                    <div id="acceptance-status-text">
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 shrink-0 bg-emerald-100 border border-emerald-300 rounded-xl flex items-center justify-center text-xl">🌿</div>
-                            <div>
-                                <p class="text-emerald-800 font-black text-sm uppercase">PROHIBITED PLASTIC DETECTED</p>
-                                <p class="text-slate-500 text-xs mt-1 leading-relaxed">Choose an approved eco-friendly replacement.</p>
+                <div id="acceptance-status-text">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 shrink-0 bg-emerald-100 border border-emerald-300 rounded-xl flex items-center justify-center text-xl">
+                            🌿
+                        </div>
+                        <div>
+                            <p class="text-emerald-800 font-black text-sm uppercase">
+                                PROHIBITED PLASTIC DETECTED
+                            </p>
+                            <p class="text-slate-500 text-xs mt-1 leading-relaxed">
+                                Choose an approved eco-friendly replacement.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FOUR OPTIONS IN ONE HORIZONTAL ROW -->
+                <div class="mt-5 grid grid-cols-4 gap-2">
+
+                    <button onclick="acceptEcoProduct('free')" data-product-type="free"
+                        class="eco-product-card group bg-gradient-to-b from-emerald-700 to-green-600 hover:from-emerald-800 hover:to-green-700 text-white p-3 rounded-2xl shadow-md transition min-h-[130px] flex flex-col items-center justify-center text-center">
+                        <span class="text-2xl">🔄</span>
+                        <span class="font-black text-[11px] mt-2 leading-tight">Eco Bottle<br>Swap</span>
+                        <span class="text-[10px] text-emerald-100 mt-1">FREE</span>
+                    </button>
+
+                    <button onclick="acceptEcoProduct('cloth')" data-product-type="cloth"
+                        class="eco-product-card group bg-emerald-50 hover:bg-emerald-100 border-2 border-emerald-200 text-emerald-950 p-3 rounded-2xl transition min-h-[130px] flex flex-col items-center justify-center text-center">
+                        <span class="text-2xl">🛍️</span>
+                        <span class="font-black text-[11px] mt-2 leading-tight">Jute<br>Bag</span>
+                        <span class="text-[10px] text-emerald-700 mt-1">₹10</span>
+                    </button>
+
+                    <button onclick="acceptEcoProduct('metal')" data-product-type="metal"
+                        class="eco-product-card group bg-gradient-to-b from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white p-3 rounded-2xl shadow-md transition min-h-[130px] flex flex-col items-center justify-center text-center">
+                        <span class="text-2xl">🍶</span>
+                        <span class="font-black text-[11px] mt-2 leading-tight">Eco<br>Flask</span>
+                        <span class="text-[10px] text-emerald-50 mt-1">₹200</span>
+                    </button>
+
+                    <button onclick="acceptEcoProduct('smart')" data-product-type="smart"
+                        class="eco-product-card group bg-white hover:bg-emerald-50 border-2 border-emerald-600 text-emerald-950 p-3 rounded-2xl transition min-h-[130px] flex flex-col items-center justify-center text-center">
+                        <span class="text-2xl">⭐</span>
+                        <span class="font-black text-[11px] mt-2 leading-tight">Smart QR<br>Canteen</span>
+                        <span class="text-[10px] text-emerald-700 mt-1">₹500</span>
+                    </button>
+
+                </div>
+
+                <!-- LIVE PRODUCT PREVIEW / SELECTION -->
+                <div id="eco-preview" class="eco-preview mt-4 bg-gradient-to-r from-emerald-50 to-white border border-emerald-200 rounded-2xl p-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <div>
+                            <p class="text-[10px] text-emerald-700 font-black uppercase tracking-widest">
+                                LIVE PRODUCT PREVIEW
+                            </p>
+                            <h3 id="eco-preview-name" class="text-base font-black text-emerald-950 mt-1">
+                                Choose an Eco Product
+                            </h3>
+                            <p id="eco-preview-benefit" class="text-[11px] text-slate-500 mt-1">
+                                Hover over a product to see its benefits. Double-click to select it.
+                            </p>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <label for="eco-qty" class="text-[10px] font-bold text-emerald-700">Qty</label>
+                            <select id="eco-qty" class="bg-white border border-emerald-300 text-emerald-950 rounded-lg px-2 py-2 text-xs font-bold focus:outline-none focus:border-emerald-500">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            <div class="min-w-[90px] bg-emerald-600 text-white rounded-xl px-3 py-2 text-center">
+                                <p class="text-[9px] uppercase font-bold text-emerald-100">Demo total</p>
+                                <p id="eco-total" class="text-sm font-black mt-0.5">₹0</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                        <button onclick="acceptEcoProduct('free')" data-product="Eco Bottle Swap" data-price="0" data-desc="Reusable bottle option for a plastic-free visit."
-                            class="product-choice bg-gradient-to-b from-emerald-700 to-green-600 hover:from-emerald-800 hover:to-green-700 text-white p-3 rounded-2xl shadow-md transition min-h-[100px] flex flex-col items-center justify-center text-center">
-                            <span class="text-2xl">🔄</span>
-                            <span class="font-black text-[11px] mt-2 leading-tight">Eco Bottle Swap</span>
-                            <span class="text-[10px] text-emerald-100 mt-1">FREE</span>
+                    <div class="flex flex-col sm:flex-row gap-2 mt-3">
+                        <button id="eco-select-btn" type="button" onclick="confirmEcoSelection()"
+                            class="flex-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl py-2.5 text-xs font-black transition">
+                            🌿 Select Eco Product
                         </button>
-
-                        <button onclick="acceptEcoProduct('cloth')" data-product="Jute Bag" data-price="10" data-desc="Eco-friendly jute carry bag for plastic-free shopping."
-                            class="product-choice bg-emerald-50 hover:bg-emerald-100 border-2 border-emerald-200 text-emerald-950 p-3 rounded-2xl transition min-h-[100px] flex flex-col items-center justify-center text-center">
-                            <span class="text-2xl">🛍️</span>
-                            <span class="font-black text-[11px] mt-2 leading-tight">Jute Bag</span>
-                            <span class="text-[10px] text-emerald-700 mt-1">₹10</span>
-                        </button>
-
-                        <button onclick="acceptEcoProduct('metal')" data-product="Eco Flask" data-price="200" data-desc="Insulated stainless-steel flask for reusable hydration."
-                            class="product-choice bg-gradient-to-b from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white p-3 rounded-2xl shadow-md transition min-h-[100px] flex flex-col items-center justify-center text-center">
-                            <span class="text-2xl">🍶</span>
-                            <span class="font-black text-[11px] mt-2 leading-tight">Eco Flask</span>
-                            <span class="text-[10px] text-emerald-50 mt-1">₹200</span>
-                        </button>
-
-                        <button onclick="acceptEcoProduct('smart')" data-product="Smart QR Canteen" data-price="500" data-desc="Smart reusable canteen with QR-based refill tracking."
-                            class="product-choice bg-white hover:bg-emerald-50 border-2 border-emerald-600 text-emerald-950 p-3 rounded-2xl transition min-h-[100px] flex flex-col items-center justify-center text-center">
-                            <span class="text-2xl">⭐</span>
-                            <span class="font-black text-[11px] mt-2 leading-tight">Smart QR Canteen</span>
-                            <span class="text-[10px] text-emerald-700 mt-1">₹500</span>
-                        </button>
+                        <span id="eco-interaction-message"
+                            class="flex-1 bg-white border border-emerald-200 text-emerald-700 rounded-xl px-3 py-2.5 text-[10px] font-bold text-center">
+                            Hover a product card to preview it.
+                        </span>
                     </div>
                 </div>
 
-                <!-- LIVE PRODUCT PREVIEW -->
-                <div class="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50/90 p-3.5">
-                    <div class="grid md:grid-cols-12 gap-3 items-center">
-                        <div class="md:col-span-5 min-w-0">
-                            <p class="text-[10px] uppercase font-black tracking-widest text-emerald-700">LIVE PRODUCT PREVIEW</p>
-                            <p id="live-product-name" class="text-base font-black text-emerald-950 mt-1 truncate">Eco Bottle Swap</p>
-                            <p id="live-product-desc" class="text-[11px] text-slate-600 mt-1 leading-snug">Reusable bottle option for a plastic-free visit.</p>
-                        </div>
-                        <div class="md:col-span-2">
-                            <span id="live-product-price" class="inline-flex w-full justify-center bg-white border border-emerald-200 text-emerald-700 px-3 py-2 rounded-xl text-xs font-black">FREE</span>
-                        </div>
-                        <div class="md:col-span-2">
-                            <select id="live-product-qty" class="w-full bg-white border border-emerald-200 rounded-xl px-3 py-2 text-xs font-bold text-emerald-950 focus:outline-none focus:border-emerald-500">
-                                <option value="1">Qty 1</option>
-                                <option value="2">Qty 2</option>
-                                <option value="3">Qty 3</option>
-                                <option value="4">Qty 4</option>
-                                <option value="5">Qty 5</option>
-                            </select>
-                        </div>
-                        <div class="md:col-span-3 bg-white border border-emerald-200 rounded-xl px-3 py-2 text-center">
-                            <p class="text-[9px] uppercase text-slate-500 font-bold">Demo Total</p>
-                            <p id="live-product-total" class="text-lg font-black text-emerald-800">₹0</p>
-                        </div>
-                    </div>
-                    <p id="live-product-feedback" class="text-[10px] text-emerald-800 mt-2 font-semibold">
-                        Hover over a product or double-click to select it.
+                <div class="mt-4 p-3 rounded-xl bg-emerald-50 border border-emerald-200">
+                    <p class="text-[10px] text-emerald-800 font-bold uppercase tracking-wider">
+                        🌱 Eco-friendly choice
+                    </p>
+                    <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
+                        Select a reusable alternative to continue the simulated eco-compliance process.
                     </p>
                 </div>
             </div>
@@ -599,138 +895,6 @@
     </div>
 </article>
 
-            </div>
-        </section>
-
-
-        <!-- =====================================================
-             SELF-LEARNING DASHBOARD
-             Interactive UI + Navigation + Dashboard interactions
-        ====================================================== -->
-        <section id="dashboard" class="bg-white py-16 border-t border-emerald-200">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="flex flex-col lg:flex-row justify-between lg:items-end gap-5 mb-8">
-                    <div>
-                        <span class="inline-block bg-emerald-100 text-emerald-700 border border-emerald-200 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest">
-                            🌿 SMART CHECKPOST DASHBOARD
-                        </span>
-                        <h2 class="text-3xl md:text-5xl font-black text-emerald-950 mt-3">
-                            Live Eco Monitoring
-                        </h2>
-                        <p class="text-emerald-950/65 mt-2 max-w-2xl text-sm md:text-base">
-                            Interact with the dashboard to monitor vehicle movement, AI scans,
-                            plastic alerts and eco-product swaps.
-                        </p>
-                    </div>
-
-                    <div class="flex flex-wrap items-center gap-2">
-                        <label for="dashboard-gate" class="text-xs font-black uppercase tracking-wider text-emerald-700">Checkpost</label>
-                        <select id="dashboard-gate" class="bg-white border border-emerald-300 rounded-xl px-3 py-2.5 text-xs font-bold text-emerald-950 focus:outline-none focus:border-emerald-500">
-                            <option>All Checkposts</option>
-                            <option>Kallar Gate</option>
-                            <option>Kunjapanai Gate</option>
-                            <option>Masinagudi Gate</option>
-                            <option>Mel Gudalur Gate</option>
-                            <option>Geddai Gate</option>
-                        </select>
-                        <button id="dashboard-refresh" type="button" class="bg-emerald-500 hover:bg-emerald-600 text-white font-black px-4 py-2.5 rounded-xl text-xs transition shadow-sm">↻ Refresh</button>
-                    </div>
-                </div>
-
-                <div class="flex flex-wrap gap-2 mb-6"><div id="dashboard-message" class="flex-1 bg-emerald-50 border border-emerald-200 rounded-2xl px-4 py-3 text-xs font-semibold text-emerald-800"></div><div id="viewport-info" class="bg-white border border-emerald-200 rounded-2xl px-4 py-3 text-xs font-black text-emerald-700">VIEWPORT: --</div></div>
-                    Dashboard ready. Hover or double-click a card to interact.
-                </div>
-
-                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <button type="button" class="dashboard-card light-card bg-white border-2 border-emerald-200 rounded-2xl p-5 text-left shadow-sm" data-metric="vehicles">
-                        <div class="flex items-center justify-between">
-                            <div class="w-11 h-11 rounded-xl bg-emerald-100 flex items-center justify-center text-xl">🚗</div>
-                            <span class="text-[10px] font-black uppercase text-emerald-600">LIVE</span>
-                        </div>
-                        <p class="text-xs font-bold text-slate-500 uppercase mt-4">Vehicles Today</p>
-                        <p id="dash-vehicles" class="dashboard-number text-3xl font-black text-emerald-800 mt-1">1,248</p>
-                        <p class="text-[11px] text-slate-500 mt-1">Double-click for details</p>
-                    </button>
-
-                    <button type="button" class="dashboard-card light-card bg-white border-2 border-emerald-200 rounded-2xl p-5 text-left shadow-sm" data-metric="scans">
-                        <div class="flex items-center justify-between">
-                            <div class="w-11 h-11 rounded-xl bg-teal-100 flex items-center justify-center text-xl">🤖</div>
-                            <span class="text-[10px] font-black uppercase text-teal-600">AI</span>
-                        </div>
-                        <p class="text-xs font-bold text-slate-500 uppercase mt-4">AI Scans</p>
-                        <p id="dash-scans" class="dashboard-number text-3xl font-black text-emerald-800 mt-1">1,132</p>
-                        <p class="text-[11px] text-slate-500 mt-1">Double-click for details</p>
-                    </button>
-
-                    <button type="button" class="dashboard-card light-card bg-white border-2 border-emerald-200 rounded-2xl p-5 text-left shadow-sm" data-metric="alerts">
-                        <div class="flex items-center justify-between">
-                            <div class="w-11 h-11 rounded-xl bg-rose-100 flex items-center justify-center text-xl">🚨</div>
-                            <span class="text-[10px] font-black uppercase text-rose-500">ALERTS</span>
-                        </div>
-                        <p class="text-xs font-bold text-slate-500 uppercase mt-4">Plastic Alerts</p>
-                        <p id="dash-alerts" class="dashboard-number text-3xl font-black text-emerald-800 mt-1">48</p>
-                        <p class="text-[11px] text-slate-500 mt-1">Double-click for details</p>
-                    </button>
-
-                    <button type="button" class="dashboard-card light-card bg-white border-2 border-emerald-200 rounded-2xl p-5 text-left shadow-sm" data-metric="swaps">
-                        <div class="flex items-center justify-between">
-                            <div class="w-11 h-11 rounded-xl bg-green-100 flex items-center justify-center text-xl">🌱</div>
-                            <span class="text-[10px] font-black uppercase text-green-600">ECO</span>
-                        </div>
-                        <p class="text-xs font-bold text-slate-500 uppercase mt-4">Eco Swaps</p>
-                        <p id="dash-swaps" class="dashboard-number text-3xl font-black text-emerald-800 mt-1">37</p>
-                        <p class="text-[11px] text-slate-500 mt-1">Double-click for details</p>
-                    </button>
-                </div>
-
-                <div class="mt-7 grid lg:grid-cols-3 gap-5">
-                    <div class="lg:col-span-2 bg-emerald-50 border border-emerald-200 rounded-3xl p-6">
-                        <div class="flex justify-between items-center gap-3">
-                            <div>
-                                <p class="text-[10px] font-black uppercase tracking-widest text-emerald-700">INTERACTIVE UI</p>
-                                <h3 class="text-xl md:text-2xl font-black text-emerald-950 mt-1">Eco Product Quick Select</h3>
-                            </div>
-                            <span class="bg-white border border-emerald-200 rounded-full px-3 py-1 text-[10px] font-black text-emerald-700">LIVE PREVIEW</span>
-                        </div>
-                        <div class="grid sm:grid-cols-3 gap-3 mt-5">
-                            <button type="button" class="product-choice bg-white border-2 border-emerald-200 rounded-2xl p-4 text-left" data-product="Eco Bottle Swap" data-price="0" data-desc="Reusable bottle option for a plastic-free visit.">
-                                <div class="text-3xl">🔄</div>
-                                <p class="font-black text-sm text-emerald-950 mt-3">Eco Bottle Swap</p>
-                                <p class="text-xs text-slate-500 mt-1">Reusable option</p>
-                                <p class="text-sm font-black text-emerald-700 mt-3">FREE</p>
-                            </button>
-                            <button type="button" class="product-choice bg-white border-2 border-emerald-200 rounded-2xl p-4 text-left" data-product="Jute Bag" data-price="10" data-desc="Reusable jute bag for snacks and travel items.">
-                                <div class="text-3xl">🛍️</div>
-                                <p class="font-black text-sm text-emerald-950 mt-3">Jute Bag</p>
-                                <p class="text-xs text-slate-500 mt-1">Reusable carry bag</p>
-                                <p class="text-sm font-black text-emerald-700 mt-3">₹10</p>
-                            </button>
-                            <button type="button" class="product-choice bg-white border-2 border-emerald-200 rounded-2xl p-4 text-left" data-product="Steel Eco Flask" data-price="200" data-desc="Reusable thermal flask for travel and refills.">
-                                <div class="text-3xl">🍶</div>
-                                <p class="font-black text-sm text-emerald-950 mt-3">Steel Eco Flask</p>
-                                <p class="text-xs text-slate-500 mt-1">Thermal reusable flask</p>
-                                <p class="text-sm font-black text-emerald-700 mt-3">₹200</p>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="light-card bg-white border-2 border-emerald-200 rounded-3xl p-6 shadow-sm">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <p class="text-[10px] font-black uppercase tracking-widest text-emerald-700">LIVE ACTIVITY</p>
-                                <h3 class="text-xl font-black text-emerald-950 mt-1">Checkpost Feed</h3>
-                            </div>
-                            <span class="inline-flex items-center gap-1.5 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-[10px] font-black">
-                                <span class="w-2 h-2 bg-emerald-500 rounded-full live-dot"></span> LIVE
-                            </span>
-                        </div>
-                        <div id="activity-feed" class="mt-4 space-y-3 text-xs">
-                            <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-3">🚗 Vehicle queue updated at Kallar Gate.</div>
-                            <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-3">🤖 AI scanner completed a baggage scan.</div>
-                            <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-3">🌱 Eco product swap completed.</div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -968,11 +1132,15 @@
                 </div>
 
                 <div class="bg-white/90 backdrop-blur-xl border border-emerald-200 rounded-3xl p-8 shadow-2xl">
-                    <form onsubmit="generateEpass(event)" class="space-y-6">
+                    <form id="epass-registration-form" class="space-y-6">
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-xs font-bold text-emerald-300 uppercase mb-2">Vehicle Registration Number *</label>
-                                <input type="text" id="pass-veh" placeholder="e.g. KA-01-MJ-4820" required class="w-full bg-white border border-emerald-300 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+                                <input type="text" id="pass-veh" placeholder="e.g. KA-01-MJ-4820" maxlength="15" required class="w-full bg-white border border-emerald-300 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+                                <div class="flex justify-between items-center mt-1.5">
+                                    <p class="text-[10px] text-slate-500">Type your vehicle number to see live validation.</p>
+                                    <p id="vehicle-char-count" class="text-[10px] font-bold text-emerald-600">0 / 15</p>
+                                </div>
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-emerald-300 uppercase mb-2">Select Entry Checkpost *</label>
@@ -1038,6 +1206,116 @@
                     </div>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- =========================================
+             SMART CHECKPOST DASHBOARD
+             SELF-LEARNING: LIVE DATA UPDATE + INTERACTIVE UI
+        ========================================== -->
+        <section id="dashboard" class="bg-gradient-to-br from-emerald-50 via-white to-green-50 py-20 border-t border-emerald-200">
+            <div class="max-w-7xl mx-auto px-6">
+
+                <div class="text-center max-w-3xl mx-auto mb-10 reveal">
+                    <span class="inline-block bg-emerald-100 text-emerald-700 border border-emerald-300 px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-widest">
+                        SMART CHECKPOST DASHBOARD
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-black text-emerald-950 mt-3">
+                        Live Eco-Tourism Monitoring
+                    </h2>
+                    <p class="text-emerald-950/70 mt-3 text-sm md:text-base leading-relaxed">
+                        Interactive dashboard created as a self-learning enhancement. The counters update automatically in this demo and also respond to scanner, product-selection and E-Pass actions.
+                    </p>
+                </div>
+
+                <!-- Live status bar -->
+                <div class="bg-white/95 border border-emerald-200 rounded-2xl p-4 shadow-sm mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <div>
+                        <p class="text-[10px] font-black uppercase tracking-widest text-emerald-700">LIVE DATA UPDATE</p>
+                        <p id="dashboard-live-message" class="text-xs text-emerald-950/70 mt-1">Dashboard initialized. Waiting for live demo activity...</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span id="dashboard-clock" class="text-xs font-black text-emerald-700">Updated: --:--:--</span>
+                    </div>
+                </div>
+
+                <!-- Dashboard cards -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+                    <article class="bg-white border border-emerald-200 rounded-2xl p-5 shadow-lg hover:-translate-y-1 transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-emerald-600">Vehicles Today</p>
+                                <p id="dash-vehicles" class="text-4xl font-black text-emerald-950 mt-2">5842</p>
+                            </div>
+                            <div class="w-11 h-11 rounded-xl bg-emerald-100 flex items-center justify-center text-xl">🚗</div>
+                        </div>
+                        <p class="text-[11px] text-emerald-950/60 mt-3">Demo traffic counter</p>
+                    </article>
+
+                    <article class="bg-white border border-emerald-200 rounded-2xl p-5 shadow-lg hover:-translate-y-1 transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-emerald-600">AI Scans</p>
+                                <p id="dash-scans" class="text-4xl font-black text-emerald-950 mt-2">4137</p>
+                            </div>
+                            <div class="w-11 h-11 rounded-xl bg-teal-100 flex items-center justify-center text-xl">🤖</div>
+                        </div>
+                        <p class="text-[11px] text-emerald-950/60 mt-3">Scanner activity</p>
+                    </article>
+
+                    <article class="bg-white border border-emerald-200 rounded-2xl p-5 shadow-lg hover:-translate-y-1 transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-emerald-600">Plastic Alerts</p>
+                                <p id="dash-alerts" class="text-4xl font-black text-rose-600 mt-2">128</p>
+                            </div>
+                            <div class="w-11 h-11 rounded-xl bg-rose-100 flex items-center justify-center text-xl">🚨</div>
+                        </div>
+                        <p class="text-[11px] text-emerald-950/60 mt-3">Demo detections</p>
+                    </article>
+
+                    <article class="bg-white border border-emerald-200 rounded-2xl p-5 shadow-lg hover:-translate-y-1 transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-[10px] font-black uppercase tracking-widest text-emerald-600">Eco Swaps</p>
+                                <p id="dash-swaps" class="text-4xl font-black text-emerald-700 mt-2">97</p>
+                            </div>
+                            <div class="w-11 h-11 rounded-xl bg-green-100 flex items-center justify-center text-xl">🌿</div>
+                        </div>
+                        <p class="text-[11px] text-emerald-950/60 mt-3">Product selections</p>
+                    </article>
+
+                </div>
+
+                <!-- Interactive dashboard controls -->
+                <div class="mt-6 bg-white border border-emerald-200 rounded-2xl p-5 shadow-lg">
+                    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest font-black text-emerald-700">INTERACTIVE DASHBOARD</p>
+                            <h3 class="text-xl font-black text-emerald-950 mt-1">Checkpost Activity Filter</h3>
+                            <p class="text-xs text-emerald-950/60 mt-1">Change the checkpost to update the dashboard summary.</p>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <select id="dashboard-gate" class="bg-white border border-emerald-300 text-emerald-950 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:border-emerald-500">
+                                <option>Kallar Gate</option>
+                                <option>Kunjapanai Gate</option>
+                                <option>Masinagudi Gate</option>
+                                <option>Mel Gudalur Gate</option>
+                                <option>Geddai Gate</option>
+                            </select>
+                            <button type="button" onclick="refreshDashboardNow()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-5 py-3 rounded-xl text-sm transition">
+                                Refresh Dashboard
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="dashboard-summary" class="mt-4 rounded-xl bg-emerald-50 border border-emerald-200 px-4 py-3 text-xs text-emerald-800 font-semibold">
+                        Kallar Gate selected. Dashboard is updating automatically.
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1207,6 +1485,15 @@
             revealObserver.observe(element);
         });
 
+        window.addEventListener('load', function () {
+            const status = document.getElementById('event-status-text');
+            if (status) {
+                status.textContent =
+                    'Welcome! The page is loaded successfully. Explore the scanner and E-Pass features.';
+            }
+
+            updateViewportInfo();
+        });
         const plasticData = {
             'bottle': { emoji: '🍾', title: 'Single-Use PET Bottle', conf: '98.6%' },
             'spoon': { emoji: '🥄', title: 'Disposable Plastic Spoon', conf: '97.4%' },
@@ -1220,7 +1507,7 @@
             const titleEl = document.getElementById('item-title');
             const tagLabel = document.getElementById('item-tag-label');
             const itemStatus = document.getElementById('item-status');
-            const itemBox = document.getElementById('scanner-item-box');
+            const itemBox = document.getElementById('item-bounding-box');
             const acceptCard = document.getElementById('acceptance-card');
             const acceptStatusText = document.getElementById('acceptance-status-text');
 
@@ -1245,11 +1532,14 @@
 
             // WEB NOTIFICATIONS API: push a native browser notification for the violation
             sendPlasticNotification(title, conf);
+
+            incrementDashboardMetric('scans', 1, `AI scan updated: ${title} detected.`);
+            incrementDashboardMetric('alerts', 1, `Plastic alert recorded: ${title}.`);
         }
 
         // Tourist Accepts Eco Product (Changes to GREEN & WHITE Approved State)
         function acceptEcoProduct(type) {
-            const box = document.getElementById('scanner-item-box');
+            const box = document.getElementById('item-bounding-box');
             const tag = document.getElementById('item-tag-label');
             const emoji = document.getElementById('item-emoji');
             const title = document.getElementById('item-title');
@@ -1323,6 +1613,8 @@
             try {
                 localStorage.setItem('ootyEcoChoice', type);
             } catch (e) { /* storage unavailable */ }
+
+            incrementDashboardMetric('swaps', 1, `Eco product interaction: ${type} selected.`);
         }
 
         // Trigger Tourist Plastic Alert Modal
@@ -1393,253 +1685,230 @@
             }
         }
 
-
         /* =========================================================
-           EXERCISE 3: JAVASCRIPT EVENT HANDLING
-           input, focus, mouseover, mouseout, change, submit, load, resize
+           EXERCISE 3 / SELF-LEARNING EVENT INTEGRATIONS
+           Required examples demonstrated:
+           input   -> live character count
+           focus   -> highlight form field
+           mouseover -> highlight product/card
+           change  -> display selected gate/product information
+           submit  -> validate form before generating the demo pass
         ========================================================= */
 
-        // LOAD EVENT
-        window.addEventListener('load', function () {
-            const msg = document.getElementById('dashboard-message');
-            if (msg) {
-                msg.textContent = 'Load event: Ooty EcoPass AI is ready. Explore the live dashboard and eco products.';
-            }
-            updateDashboardCards();
-            updateLiveProductTotal();
-            updateViewportInfo();
-        });
+        // INPUT EVENT: live vehicle registration counter
+        const vehicleInput = document.getElementById('pass-veh');
+        const vehicleCounter = document.getElementById('vehicle-char-count');
 
-        // INPUT EVENT: live vehicle character count
-        const vehicleField = document.getElementById('pass-veh');
-        if (vehicleField) {
-            const wrap = vehicleField.parentElement;
-            if (wrap && !document.getElementById('vehicle-char-count')) {
-                const helper = document.createElement('div');
-                helper.className = 'flex justify-between mt-1.5 text-[10px]';
-                helper.innerHTML = '<span class="text-slate-500">Live character count</span><span id="vehicle-char-count" class="font-bold text-emerald-600">0 / 15</span>';
-                wrap.appendChild(helper);
-                vehicleField.setAttribute('maxlength', '15');
-            }
-            vehicleField.addEventListener('input', function () {
-                const counter = document.getElementById('vehicle-char-count');
-                if (counter) counter.textContent = `${this.value.length} / 15`;
-                const msg = document.getElementById('dashboard-message');
-                if (msg) msg.textContent = this.value ? `Input event: vehicle number entered — ${this.value.toUpperCase()}` : 'Input event: start typing your vehicle registration number.';
+        if (vehicleInput && vehicleCounter) {
+            vehicleInput.addEventListener('input', function () {
+                const length = this.value.length;
+                vehicleCounter.textContent = `${length} / 15`;
+                vehicleCounter.classList.remove('good', 'warning', 'danger');
+
+                if (length === 0) {
+                    vehicleCounter.classList.add('good');
+                } else if (length < 8) {
+                    vehicleCounter.classList.add('warning');
+                } else {
+                    vehicleCounter.classList.add('good');
+                }
+
+                const status = document.getElementById('event-status-text');
+                if (status) {
+                    status.textContent = length === 0
+                        ? 'Start typing your vehicle registration number.'
+                        : `Input event: vehicle number updated live — ${this.value.toUpperCase()}`;
+                }
             });
 
-            // FOCUS EVENT
-            vehicleField.addEventListener('focus', function () {
+            // FOCUS EVENT: highlight selected form field
+            vehicleInput.addEventListener('focus', function () {
                 this.classList.add('event-focus');
-                const msg = document.getElementById('dashboard-message');
-                if (msg) msg.textContent = 'Focus event: vehicle registration field is active.';
+                const status = document.getElementById('event-status-text');
+                if (status) status.textContent = 'Focus event: vehicle field is active.';
             });
-            vehicleField.addEventListener('blur', function () {
+
+            vehicleInput.addEventListener('blur', function () {
                 this.classList.remove('event-focus');
             });
         }
 
-        // CHANGE EVENT: checkpost selection
-        const gateField = document.getElementById('pass-gate');
-        if (gateField) {
-            gateField.addEventListener('change', function () {
-                const msg = document.getElementById('dashboard-message');
-                if (msg) msg.textContent = `Change event: selected entry checkpost — ${this.options[this.selectedIndex].textContent}.`;
+        const gateInput = document.getElementById('pass-gate');
+        if (gateInput) {
+            gateInput.addEventListener('focus', function () {
+                this.classList.add('event-focus');
+                const status = document.getElementById('event-status-text');
+                if (status) status.textContent = 'Focus event: choose your entry checkpost.';
             });
-        }
 
-        // SUBMIT EVENT: validation feedback alongside existing inline handler
-        const epassForm = document.querySelector('#epass-form form');
-        if (epassForm) {
-            epassForm.addEventListener('submit', function () {
-                const vehicle = document.getElementById('pass-veh');
-                if (vehicle && vehicle.value.trim()) {
-                    const msg = document.getElementById('dashboard-message');
-                    if (msg) msg.textContent = 'Submit event: E-Pass details validated and submitted.';
+            gateInput.addEventListener('blur', function () {
+                this.classList.remove('event-focus');
+            });
+
+            // CHANGE EVENT: dynamically show selected checkpost
+            gateInput.addEventListener('change', function () {
+                const selectedGate = this.options[this.selectedIndex].textContent;
+                const status = document.getElementById('event-status-text');
+                if (status) status.textContent = `Change event: selected checkpost — ${selectedGate}.`;
+
+                const dashboardGate = document.getElementById('dashboard-gate');
+                if (dashboardGate) {
+                    const option = Array.from(dashboardGate.options).find(
+                        opt => opt.textContent === selectedGate
+                    );
+                    if (option) dashboardGate.value = selectedGate;
+                    updateDashboardSummary(selectedGate);
                 }
             });
         }
 
-        // RESIZE EVENT
-        function updateViewportInfo() {
-            let info = document.getElementById('viewport-info');
-            if (!info) return;
-            info.textContent = `VIEWPORT: ${window.innerWidth} × ${window.innerHeight}px`;
-        }
-        window.addEventListener('resize', function () {
-            updateViewportInfo();
-            const msg = document.getElementById('dashboard-message');
-            if (msg) msg.textContent = `Resize event: browser size is ${window.innerWidth}px wide.`;
-        });
+        // SUBMIT EVENT: validate the E-Pass form before generation
+        const epassForm = document.getElementById('epass-registration-form');
+        if (epassForm) {
+            epassForm.addEventListener('submit', function (event) {
+                event.preventDefault();
 
-        // MOUSEOVER + MOUSEOUT on gallery cards and dashboard products
-        document.querySelectorAll('#gallery article, .product-choice, .dashboard-card').forEach(function (card) {
-            card.addEventListener('mouseover', function () {
-                this.classList.add('event-hover');
-                const title = this.querySelector('h3')?.textContent || this.dataset.product || 'feature';
-                const msg = document.getElementById('dashboard-message');
-                if (msg) msg.textContent = `Mouseover event: previewing ${title}.`;
+                const vehicle = document.getElementById('pass-veh').value.trim().toUpperCase();
+                const plasticBot = document.getElementById('check-plastic-bot').checked;
+                const plasticCut = document.getElementById('check-plastic-cut').checked;
+
+                const vehiclePattern = /^[A-Z]{2}-?\d{1,2}-?[A-Z]{1,3}-?\d{1,4}$/;
+
+                if (!vehicle) {
+                    alert('Please enter your vehicle registration number.');
+                    vehicleInput.focus();
+                    return;
+                }
+
+                if (!vehiclePattern.test(vehicle.replace(/\s+/g, ''))) {
+                    alert('Please enter a valid vehicle registration format, for example KA-01-MJ-4820.');
+                    vehicleInput.focus();
+                    return;
+                }
+
+                if (plasticBot || plasticCut) {
+                    triggerTouristAlert('You have declared prohibited plastic items in your E-Pass application');
+                    return;
+                }
+
+                generateEpass(event);
+
+                const status = document.getElementById('event-status-text');
+                if (status) {
+                    status.textContent = `Submit event: E-Pass generated successfully for ${vehicle}.`;
+                }
+
+                incrementDashboardMetric('vehicles', 1, `E-Pass generated for ${vehicle}.`);
             });
-            card.addEventListener('mouseout', function () {
-                this.classList.remove('event-hover');
-                const msg = document.getElementById('dashboard-message');
-                if (msg) msg.textContent = 'Mouseout event: feature returned to its normal appearance.';
-            });
-        });
-
-        // =========================
-        // Dashboard interactions
-        // =========================
-        const dashboardState = { vehicles: 1248, scans: 1132, alerts: 48, swaps: 37 };
-
-        function flashNumber(id, value) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            el.textContent = Number(value).toLocaleString();
-            el.classList.remove('live-update-flash');
-            void el.offsetWidth;
-            el.classList.add('live-update-flash');
         }
+
+        /* =========================================================
+           SELF-LEARNING DASHBOARD: LIVE DATA UPDATE
+           The values below are simulated demo data, not government data.
+        ========================================================= */
+        const dashboardState = {
+            vehicles: 5842,
+            scans: 4137,
+            alerts: 128,
+            swaps: 97
+        };
+
+        const dashboardGateData = {
+            'Kallar Gate': { vehicles: 5842, scans: 4137, alerts: 128, swaps: 97 },
+            'Kunjapanai Gate': { vehicles: 4120, scans: 3028, alerts: 86, swaps: 74 },
+            'Masinagudi Gate': { vehicles: 5365, scans: 3881, alerts: 141, swaps: 115 },
+            'Mel Gudalur Gate': { vehicles: 3617, scans: 2792, alerts: 62, swaps: 48 },
+            'Geddai Gate': { vehicles: 2944, scans: 2246, alerts: 47, swaps: 39 }
+        };
 
         function updateDashboardCards() {
-            flashNumber('dash-vehicles', dashboardState.vehicles);
-            flashNumber('dash-scans', dashboardState.scans);
-            flashNumber('dash-alerts', dashboardState.alerts);
-            flashNumber('dash-swaps', dashboardState.swaps);
-        }
+            const mapping = {
+                vehicles: 'dash-vehicles',
+                scans: 'dash-scans',
+                alerts: 'dash-alerts',
+                swaps: 'dash-swaps'
+            };
 
-        function addActivity(message) {
-            const feed = document.getElementById('activity-feed');
-            if (!feed) return;
-            const item = document.createElement('div');
-            item.className = 'bg-emerald-50 border border-emerald-100 rounded-xl p-3';
-            item.textContent = message;
-            feed.prepend(item);
-            while (feed.children.length > 4) feed.removeChild(feed.lastElementChild);
-        }
-
-        document.querySelectorAll('.dashboard-card').forEach(function (card) {
-            card.addEventListener('dblclick', function () {
-                document.querySelectorAll('.dashboard-card').forEach(c => c.classList.remove('active-card'));
-                this.classList.add('active-card');
-                const labels = { vehicles: 'Vehicles Today', scans: 'AI Scans', alerts: 'Plastic Alerts', swaps: 'Eco Swaps' };
-                const label = labels[this.dataset.metric] || 'Metric';
-                const msg = document.getElementById('dashboard-message');
-                if (msg) msg.textContent = `Dashboard interaction: ${label} selected for monitoring.`;
-                addActivity(`📊 ${label} opened from dashboard.`);
+            Object.keys(mapping).forEach(function (key) {
+                const el = document.getElementById(mapping[key]);
+                if (el) {
+                    el.textContent = dashboardState[key].toLocaleString('en-IN');
+                    el.classList.remove('dashboard-pulse');
+                    void el.offsetWidth;
+                    el.classList.add('dashboard-pulse');
+                }
             });
-        });
 
+            const clock = document.getElementById('dashboard-clock');
+            if (clock) {
+                clock.textContent = `Updated: ${new Date().toLocaleTimeString()}`;
+            }
+        }
+
+        function updateDashboardSummary(gateName) {
+            const summary = document.getElementById('dashboard-summary');
+            const liveMessage = document.getElementById('dashboard-live-message');
+            const data = dashboardGateData[gateName];
+
+            if (!summary || !data) return;
+
+            dashboardState.vehicles = data.vehicles;
+            dashboardState.scans = data.scans;
+            dashboardState.alerts = data.alerts;
+            dashboardState.swaps = data.swaps;
+
+            summary.textContent = `${gateName}: ${data.vehicles.toLocaleString('en-IN')} vehicles, ${data.scans.toLocaleString('en-IN')} AI scans, ${data.alerts} plastic alerts and ${data.swaps} eco swaps in this demo dashboard.`;
+            if (liveMessage) liveMessage.textContent = `Live demo view changed to ${gateName}.`;
+            updateDashboardCards();
+        }
+
+        function refreshDashboardNow() {
+            const gate = document.getElementById('dashboard-gate');
+            const gateName = gate ? gate.value : 'Kallar Gate';
+            updateDashboardSummary(gateName);
+        }
+
+        function incrementDashboardMetric(metric, amount, message) {
+            if (!Object.prototype.hasOwnProperty.call(dashboardState, metric)) return;
+
+            dashboardState[metric] += amount;
+            updateDashboardCards();
+
+            const messageEl = document.getElementById('dashboard-live-message');
+            if (messageEl) messageEl.textContent = message;
+        }
+
+        // Dashboard CHANGE EVENT
         const dashboardGate = document.getElementById('dashboard-gate');
         if (dashboardGate) {
             dashboardGate.addEventListener('change', function () {
-                const msg = document.getElementById('dashboard-message');
-                if (msg) msg.textContent = `Change event: dashboard filtered to ${this.value}.`;
-                addActivity(`📍 Filter changed to ${this.value}.`);
+                updateDashboardSummary(this.value);
+
+                const status = document.getElementById('event-status-text');
+                if (status) status.textContent = `Change event: dashboard switched to ${this.value}.`;
             });
         }
 
-        const refreshDashboard = document.getElementById('dashboard-refresh');
-        if (refreshDashboard) {
-            refreshDashboard.addEventListener('click', function () {
-                dashboardState.vehicles += Math.floor(Math.random() * 8) + 1;
-                dashboardState.scans += Math.floor(Math.random() * 10) + 1;
-                if (Math.random() < .4) dashboardState.alerts += 1;
-                if (Math.random() < .55) dashboardState.swaps += 1;
-                updateDashboardCards();
-                const msg = document.getElementById('dashboard-message');
-                if (msg) msg.textContent = 'Dashboard refreshed with simulated live values.';
-                addActivity('🔄 Dashboard data refreshed.');
-            });
-        }
-
+        // Automatic live demo update every 3 seconds.
         setInterval(function () {
-            dashboardState.vehicles += Math.floor(Math.random() * 4);
-            dashboardState.scans += Math.floor(Math.random() * 6) + 1;
-            if (Math.random() < .2) dashboardState.alerts += 1;
-            if (Math.random() < .35) dashboardState.swaps += 1;
+            dashboardState.vehicles += Math.floor(Math.random() * 3);
+            dashboardState.scans += Math.floor(Math.random() * 5);
+            dashboardState.alerts += Math.random() < 0.25 ? 1 : 0;
+            dashboardState.swaps += Math.random() < 0.35 ? 1 : 0;
             updateDashboardCards();
-            const messages = [
-                '🚗 New vehicle entered the simulated queue.',
-                '🤖 AI baggage scan completed.',
-                '🌱 Eco replacement recorded.',
-                '📊 Dashboard counters updated.'
-            ];
-            addActivity(messages[Math.floor(Math.random() * messages.length)]);
-        }, 5000);
 
-        // Interactive eco product selection + CHANGE event on quantity
-        let currentLiveProduct = { name: 'Eco Bottle Swap', price: 0, desc: 'Reusable bottle option for a plastic-free visit.' };
-
-        function updateLiveProductTotal() {
-            const qty = Number(document.getElementById('live-product-qty')?.value || 1);
-            const total = currentLiveProduct.price * qty;
-            const totalEl = document.getElementById('live-product-total');
-            const priceEl = document.getElementById('live-product-price');
-            if (totalEl) totalEl.textContent = total === 0 ? '₹0' : `₹${total.toLocaleString()}`;
-            if (priceEl) priceEl.textContent = currentLiveProduct.price === 0 ? 'FREE' : `₹${currentLiveProduct.price}`;
-        }
-
-        document.querySelectorAll('.product-choice').forEach(function (card) {
-            card.addEventListener('mouseover', function () {
-                const name = this.dataset.product || 'Eco Product';
-                const desc = this.dataset.desc || 'Approved eco-friendly replacement.';
-                const price = Number(this.dataset.price || 0);
-                currentLiveProduct = { name, price, desc };
-                document.getElementById('live-product-name').textContent = name;
-                document.getElementById('live-product-desc').textContent = desc;
-                document.getElementById('live-product-feedback').textContent = `Mouseover: previewing ${name}.`;
-                updateLiveProductTotal();
-            });
-            card.addEventListener('dblclick', function () {
-                document.querySelectorAll('.product-choice').forEach(c => c.classList.remove('selected'));
-                this.classList.add('selected');
-                currentLiveProduct = { name: this.dataset.product || 'Eco Product', price: Number(this.dataset.price || 0), desc: this.dataset.desc || 'Approved eco-friendly replacement.' };
-                document.getElementById('live-product-name').textContent = currentLiveProduct.name;
-                document.getElementById('live-product-desc').textContent = currentLiveProduct.desc;
-                document.getElementById('live-product-feedback').textContent = `Selected: ${currentLiveProduct.name}.`;
-                updateLiveProductTotal();
-                addActivity(`🌱 Product selected: ${currentLiveProduct.name}.`);
-            });
-        });
-
-        const liveQty = document.getElementById('live-product-qty');
-        if (liveQty) {
-            liveQty.addEventListener('change', function () {
-                updateLiveProductTotal();
-                document.getElementById('live-product-feedback').textContent = `Change event: quantity changed to ${this.value}.`;
-            });
-        }
-
-        // Dark Mode / Light Mode creativity feature
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const dark = document.body.classList.contains('dark-mode');
-            localStorage.setItem('ootyTheme', dark ? 'dark' : 'light');
-            const btn = document.getElementById('theme-toggle');
-            if (btn) btn.textContent = dark ? '☀️ Light Mode' : '🌙 Dark Mode';
-        }
-
-        try {
-            if (localStorage.getItem('ootyTheme') === 'dark') {
-                document.body.classList.add('dark-mode');
-                const btn = document.getElementById('theme-toggle');
-                if (btn) btn.textContent = '☀️ Light Mode';
+            const liveMessage = document.getElementById('dashboard-live-message');
+            if (liveMessage) {
+                liveMessage.textContent = 'Live data update: dashboard values refreshed automatically for demonstration.';
             }
-        } catch (e) {}
+        }, 3000);
 
-        // Navigation enhancement: highlight section in view
-        const navLinks = Array.from(document.querySelectorAll('.nav-link'));
-        const sectionsForNav = navLinks.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
-        const navObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (!entry.isIntersecting) return;
-                navLinks.forEach(link => link.classList.remove('nav-active'));
-                const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
-                if (active) active.classList.add('nav-active');
-            });
-        }, { threshold: 0.25 });
-        sectionsForNav.forEach(section => navObserver.observe(section));
+        updateDashboardCards();
+
+        /* =========================================================
+           EXISTING PRODUCT INTERACTION ENHANCEMENT
+           MOUSEOVER + MOUSEOUT + DOUBLE-CLICK + CHANGE
+        ========================================================= */
 
         /* =========================================================
            HTML5 API 1: GEOLOCATION API
@@ -1766,6 +2035,173 @@
                 });
             }
         }
+
+
+        /* =========================================================
+           LIVE ECO-PRODUCT INTERACTION
+           - mouseover  -> preview product and highlight card
+           - mouseout   -> restore card appearance
+           - dblclick   -> select product and mark it selected
+           - change     -> update demo quantity and total
+        ========================================================= */
+        const ecoProducts = {
+            free: {
+                name: 'Eco Reusable Water Bottle',
+                price: 0,
+                benefit: 'Free bottle-swap option. Reusable and travel friendly.',
+                emoji: '🔄'
+            },
+            cloth: {
+                name: 'Eco-Friendly Jute Carry Bag',
+                price: 10,
+                benefit: 'Reusable jute bag for carrying snacks and travel items.',
+                emoji: '🛍️'
+            },
+            metal: {
+                name: 'Stainless Steel Thermal Flask',
+                price: 200,
+                benefit: 'Reusable thermal flask for carrying drinking water.',
+                emoji: '🍶'
+            },
+            smart: {
+                name: 'Smart QR Eco Canteen',
+                price: 500,
+                benefit: 'Premium reusable canteen concept with smart QR features.',
+                emoji: '⭐'
+            }
+        };
+
+        let selectedEcoProduct = 'free';
+
+        function updateEcoPreview(type, message) {
+            const product = ecoProducts[type];
+            if (!product) return;
+
+            selectedEcoProduct = type;
+
+            const name = document.getElementById('eco-preview-name');
+            const benefit = document.getElementById('eco-preview-benefit');
+            const total = document.getElementById('eco-total');
+            const status = document.getElementById('eco-interaction-message');
+            const preview = document.getElementById('eco-preview');
+
+            if (!name || !benefit || !total) return;
+
+            name.textContent = `${product.emoji} ${product.name}`;
+            benefit.textContent = product.benefit;
+            status.textContent = message || `Selected: ${product.name}`;
+
+            const qty = Number(document.getElementById('eco-qty')?.value || 1);
+            total.textContent = `₹${product.price * qty}`;
+
+            preview.classList.remove('flash');
+            void preview.offsetWidth;
+            preview.classList.add('flash');
+        }
+
+        function confirmEcoSelection() {
+            const product = ecoProducts[selectedEcoProduct];
+            if (!product) return;
+
+            acceptEcoProduct(selectedEcoProduct);
+            localStorage.setItem('ootyEcoChoice', selectedEcoProduct);
+
+            const message = document.getElementById('eco-interaction-message');
+            if (message) {
+                message.textContent = `✓ ${product.name} selected for your demo E-Pass.`;
+            }
+
+            document.querySelectorAll('.eco-product-card').forEach(function(card) {
+                card.classList.toggle(
+                    'selected',
+                    card.dataset.productType === selectedEcoProduct
+                );
+            });
+        }
+
+        // MOUSEOVER + MOUSEOUT + DOUBLE-CLICK on eco products
+        document.querySelectorAll('.eco-product-card').forEach(function(card) {
+            const type = card.dataset.productType;
+
+            card.addEventListener('mouseover', function () {
+                card.classList.add('event-hover');
+                updateEcoPreview(type, `Mouseover: previewing ${ecoProducts[type].name}.`);
+            });
+
+            card.addEventListener('mouseout', function () {
+                card.classList.remove('event-hover');
+                const message = document.getElementById('eco-interaction-message');
+                if (message) {
+                    message.textContent = 'Mouseout: move to another product or double-click to select.';
+                }
+            });
+
+            card.addEventListener('dblclick', function (event) {
+                event.preventDefault();
+                updateEcoPreview(type, `Double-click: ${ecoProducts[type].name} selected.`);
+                confirmEcoSelection();
+            });
+        });
+
+        // CHANGE EVENT for product quantity
+        const ecoQty = document.getElementById('eco-qty');
+        if (ecoQty) {
+            ecoQty.addEventListener('change', function () {
+                const product = ecoProducts[selectedEcoProduct];
+                const total = document.getElementById('eco-total');
+                const message = document.getElementById('eco-interaction-message');
+
+                if (product && total) {
+                    total.textContent = `₹${product.price * Number(this.value)}`;
+                }
+
+                if (message) {
+                    message.textContent = `Quantity changed to ${this.value}. Demo total updated live.`;
+                }
+            });
+        }
+
+        /* =========================================================
+           ADDITIONAL EVENT HANDLING
+           resize -> live viewport information
+           mouseover / mouseout -> highlight gallery cards
+        ========================================================= */
+
+        function updateViewportInfo() {
+            const viewport = document.getElementById('viewport-info');
+            if (viewport) {
+                viewport.textContent = `VIEWPORT: ${window.innerWidth} × ${window.innerHeight} px`;
+            }
+        }
+
+        window.addEventListener('resize', function () {
+            updateViewportInfo();
+            const status = document.getElementById('event-status-text');
+            if (status) {
+                status.textContent = `Resize event: browser width is ${window.innerWidth}px.`;
+            }
+        });
+
+        document.querySelectorAll('[data-event-card="true"]').forEach(function (card) {
+            card.addEventListener('mouseover', function () {
+                card.classList.add('event-hover');
+                const status = document.getElementById('event-status-text');
+                if (status) {
+                    const title = card.querySelector('h3');
+                    status.textContent = title
+                        ? `Mouseover event: viewing "${title.textContent}".`
+                        : 'Mouseover event: feature highlighted.';
+                }
+            });
+
+            card.addEventListener('mouseout', function () {
+                card.classList.remove('event-hover');
+                const status = document.getElementById('event-status-text');
+                if (status) {
+                    status.textContent = 'Mouseout event: card returned to its original appearance.';
+                }
+            });
+        });
 
         /* =========================================================
            HTML5 API 4: CLIPBOARD API
@@ -1912,6 +2348,56 @@
                 setTimeout(toggleScannerFullscreen, 400);
             }
         }
+    
+
+        /* =========================================================
+           CREATIVE FEATURE: DARK MODE TOGGLE
+           Stores the user's theme preference using Local Storage,
+           which is already one of the five required HTML5 APIs.
+        ========================================================= */
+        function applyTheme(theme) {
+            const isDark = theme === 'dark';
+            document.body.classList.toggle('dark-mode', isDark);
+
+            const icon = document.getElementById('darkModeIcon');
+            const text = document.getElementById('darkModeText');
+            const button = document.getElementById('darkModeToggle');
+
+            if (icon) icon.textContent = isDark ? '☀️' : '🌙';
+            if (text) text.textContent = isDark ? 'Light' : 'Dark';
+            if (button) button.setAttribute('aria-pressed', String(isDark));
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.body.classList.toggle('dark-mode');
+            const theme = isDark ? 'dark' : 'light';
+
+            try {
+                localStorage.setItem('ootyEcoTheme', theme);
+            } catch (error) {
+                console.warn('Theme preference could not be saved.');
+            }
+
+            applyTheme(theme);
+        }
+
+        function loadThemePreference() {
+            let theme = 'light';
+
+            try {
+                theme = localStorage.getItem('ootyEcoTheme') || 'light';
+            } catch (error) {
+                theme = 'light';
+            }
+
+            applyTheme(theme);
+        }
+
+        window.addEventListener('DOMContentLoaded', function () {
+            loadThemePreference();
+            updateEcoPreview('free', 'Ready: hover, double-click, or use Select Eco Product.');
+        });
+
     </script>
 </body>
 </html>
