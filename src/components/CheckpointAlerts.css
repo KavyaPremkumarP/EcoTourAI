@@ -1,0 +1,10 @@
+.alert-box { border-radius: 12px; padding: 14px 18px; margin: 14px 0; border: 2px solid; font-size: 14px; }
+.alert-box p { margin-top: 6px; font-weight: 600; }
+.alert-box.idle { background: #f0f8f2; border-color: #b8e4c8; color: #31553e; }
+.alert-box.info { background: #e0f2fe; border-color: #38bdf8; color: #075985; }
+.alert-box.warn { background: #fef3c7; border-color: #f59e0b; color: #92400e; }
+.alert-box.danger { background: #fee2e2; border-color: #dc2626; color: #991b1b; animation: pulse 1s infinite; }
+.alert-box.arrived { background: #dcfce7; border-color: #16a34a; color: #166534; }
+.badge { background: #123524; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 99px; margin-left: 8px; }
+.badge.live { background: #dc2626; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 #dc262655; } 50% { box-shadow: 0 0 0 10px #dc262600; } }
